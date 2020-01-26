@@ -10,7 +10,7 @@ public class Silnia {
             System.out.println(silniaRekurencja(input.nextInt()));
         }while (true);
 
-        
+
 
     }
     public static long silnia(long number){
