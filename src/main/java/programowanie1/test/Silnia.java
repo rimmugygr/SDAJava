@@ -16,7 +16,10 @@ public class Silnia {
     public static long silnia(long number){
         long temp=1;
         //for(int i=1;i<=number;i++)  temp*=i;
-        while (number>1) temp*=number--;
+        while (number>1)
+        {
+            temp*=number--;
+        }
         return temp;
     }
 
