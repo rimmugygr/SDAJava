@@ -2,6 +2,7 @@ package programowanie1.team_steam_generic_optional;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class MainTeam {
@@ -164,6 +165,8 @@ public class MainTeam {
                 .map(Team::getPoints);//zwraca optional
         if(max3.isPresent()) System.out.println("max: " + max3);//sprawdzanie w optionalu
 
-
+        //int countInt = 3;
+        //
+        //IntStream.range(0,countInt).forEach(index -> result.add(products.get(index)));
     }
 }
