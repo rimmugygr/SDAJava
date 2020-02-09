@@ -1,7 +1,5 @@
-package programowanie1.threads.bank;
+package programowanie1.bank.file.thread;
 
-
-import java.math.BigDecimal;
 
 /**
  * Bank: nazwa, lista klientów, OPT(lista rachunków)
@@ -22,18 +20,31 @@ import java.math.BigDecimal;
 public class Main {
 
     public static void main(String[] args) {
+
+
+
+
         Bank bank1 = new Bank("NBP");
 
+/*        for (Client client : InputFile.getClientFromFile2Line("bankclients2line.txt")) {
+            System.out.println(client.getViewAccounts());
+        }*/
+
+
+
+
+
+        bank1.addClients(InputFile.getClientFromFile1Line("bankclients1line.txt"));
 
         Client client1=bank1.addClient(new Client("aaa", "bbb", "12345"));
-        String client1Account1 = bank1.addAccount(client1,TypeAccount.O);
-        String client1Account2 = bank1.addAccount(client1,TypeAccount.R);
-        String client1Account3 = bank1.addAccount(client1,TypeAccount.P);
+        String client1Account1 = bank1.addAccount(client1,"O");
+        String client1Account2 = bank1.addAccount(client1,"R");
+        String client1Account3 = bank1.addAccount(client1,"P");
 
         Client client2=bank1.addClient(new Client("xxx", "yyy", "12345"));
-        String client2Account1 = bank1.addAccount(client2,TypeAccount.O);
-        String client2Account2 = bank1.addAccount(client2,TypeAccount.R);
-        String client2Account3 = bank1.addAccount(client2,TypeAccount.R);
+        String client2Account1 = bank1.addAccount(client2,"O");
+        String client2Account2 = bank1.addAccount(client2,"R");
+        String client2Account3 = bank1.addAccount(client2,"R");
 
 
         bank1.payIn(client1Account1,222);

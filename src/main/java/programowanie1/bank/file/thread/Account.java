@@ -1,4 +1,4 @@
-package programowanie1.threads.bank;
+package programowanie1.bank.file.thread;
 
 import java.math.BigDecimal;
 import java.util.LinkedList;
@@ -12,8 +12,8 @@ public class Account {
     private String accountNumber;
     private static int accountCount=0;
 
-    public Account(TypeAccount type) {
-        this.type = type;
+    public Account(String type) {
+        this.type = TypeAccount.getByName(type);
         this.balance =  new BigDecimal(String.valueOf(BigDecimal.ZERO));
         this.saldo = new LinkedList<>();
         this.accountNumber= String.valueOf(accountCount++);

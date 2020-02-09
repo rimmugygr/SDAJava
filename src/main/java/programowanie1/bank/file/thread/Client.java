@@ -1,6 +1,5 @@
-package programowanie1.threads.bank;
+package programowanie1.bank.file.thread;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -55,6 +54,10 @@ public class Client {
             result+=account.viewWithSaldo();
         }
         return result;
+    }
+
+    public List<Account> getListAccounts(){
+        return bills;
     }
 
     @Override
