@@ -22,6 +22,10 @@ public class InputFile {
                 for (String s : dataLine) {
 
                 }
+
+
+
+
                 DataStorage storage=new DataStorage(dataLine[1],dataLine[2]);//tworzymy obiekt
                 dataFileMap.put(Integer.parseInt(dataLine[0]),storage);//dodajmy do mapy
             }
