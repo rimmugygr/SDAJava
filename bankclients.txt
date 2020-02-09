@@ -1,3 +1,0 @@
-4444|Marian|Banaś|R|10
-25555|Jaro|Kaczyński|O|20|R|55
-36666|Zbysiu|Ziobro|R|30

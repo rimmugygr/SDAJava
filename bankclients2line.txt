@@ -1,0 +1,5 @@
+4444:::Marian:::Banaś
+25555:::Jaro:::Kaczyński:::R:::10
+O:::20:::R:::55
+36666:::Zbysiu:::Ziobro
+98764:::Anka:::Blad

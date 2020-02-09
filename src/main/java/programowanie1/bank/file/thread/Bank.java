@@ -1,6 +1,5 @@
-package programowanie1.threads.bank;
+package programowanie1.bank.file.thread;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +16,13 @@ public class Bank {
         this.name = name;
         this.clients = new HashMap<>();
         accounts = new ArrayList<>();
+    }
+
+    public void addClients(List<Client> clients){
+        for (Client client : clients) {
+            this.addClient(client);
+        }
+
     }
 
     private Account getAccount(String accountNumber){
@@ -42,10 +48,13 @@ public class Bank {
 
     public Client addClient(Client client) {
         clients.put(clientId++,client);
+        if(client.getNumerAccounts()>0){
+            accounts.addAll(client.getListAccounts());
+        }
         return client;
     }
 
-    public String addAccount(Client client, TypeAccount typeAccount) {
+    public String addAccount(Client client, String typeAccount) {
         Account account= new Account(typeAccount);
         accounts.add(account);
         return client.addAccount(account);
