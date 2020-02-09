@@ -9,8 +9,6 @@ import java.util.*;
 
 public class InputFile {
 
-    public static final Map reaWithBufferedReader(String nameFile){
-
 
     public static final Map<Integer,List<String>> reaWithBufferedReader(String nameFile){
         Map<Integer,List<String>> dataFileMap = new HashMap<>();
@@ -26,13 +24,13 @@ public class InputFile {
             }
 
 
-            }
-            return dataFileMap;
-        } catch (FileNotFoundException e) {
+            } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
         return dataFileMap;
     }
 }
