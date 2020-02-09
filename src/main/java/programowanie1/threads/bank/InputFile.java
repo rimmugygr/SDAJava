@@ -23,7 +23,8 @@ public class InputFile {
 
                 }
 
-
+//asdasdasdasd
+        //asdasdasd
 
 
                 DataStorage storage=new DataStorage(dataLine[1],dataLine[2]);//tworzymy obiekt
