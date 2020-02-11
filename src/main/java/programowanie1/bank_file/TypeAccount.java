@@ -1,4 +1,4 @@
-package programowanie1.bank.file.thread;
+package programowanie1.bank_file;
 
 public enum TypeAccount {
     O("O"),
