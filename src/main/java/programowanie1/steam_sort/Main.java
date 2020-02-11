@@ -82,12 +82,13 @@ public class Main {
 
 
 
-        //sortowanie z comparatorem na lambdzie
+        //sortowanie z comparatorem na lambdzie v1
         lista.clear();
         lista=Thing.init();
         lista.sort(Comparator.comparing(Thing::getAge).thenComparing(Thing::getName));
         lista.forEach(x->System.out.println(x));
 
+        //sortowanie z comparatorem na lambdzie v2
         lista.clear();
         lista=Thing.init();
         lista.sort((Thing t1,Thing t2)->{
