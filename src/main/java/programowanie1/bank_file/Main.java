@@ -1,4 +1,4 @@
-package programowanie1.bank.file.thread;
+package programowanie1.bank_file;
 
 
 /**
@@ -34,7 +34,7 @@ public class Main {
 
 
 
-        bank1.addClients(InputFile.getClientFromFile1Line("bankclients1line.txt"));
+        bank1.addClients(InputFile.getClientFromFile2Line("bankclients1line.txt"));
 
         Client client1=bank1.addClient(new Client("aaa", "bbb", "12345"));
         String client1Account1 = bank1.addAccount(client1,"O");

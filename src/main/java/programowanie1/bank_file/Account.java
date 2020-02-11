@@ -1,4 +1,4 @@
-package programowanie1.bank.file.thread;
+package programowanie1.bank_file;
 
 import java.math.BigDecimal;
 import java.util.LinkedList;
