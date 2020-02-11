@@ -1,4 +1,4 @@
-package programowanie1.jdbc;
+package programowanie1.jdbc_transaction;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
