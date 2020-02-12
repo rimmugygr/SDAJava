@@ -32,6 +32,12 @@ public class Thing {
         result.add(new Thing("hhh","vvv",2));
         return result;
     }
+    public static List<Thing> initSmall(){
+        List<Thing> result=new ArrayList<>();
+        result.add(new Thing("aaa","bbb",5));
+        result.add(new Thing("kkk","xxx",6));
+        return result;
+    }
 
     public void view(){
         System.out.println(this.toString());

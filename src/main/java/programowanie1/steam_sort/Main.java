@@ -3,9 +3,8 @@ package programowanie1.steam_sort;
 
 
 import programowanie1.steam_sort.pojo.Thing;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -81,13 +80,13 @@ public class Main {
                 });
 
 
-
+        System.out.println(">>>sort lambda<<<");
         //sortowanie z comparatorem na lambdzie v1
         lista.clear();
         lista=Thing.init();
         lista.sort(Comparator.comparing(Thing::getAge).thenComparing(Thing::getName));
         lista.forEach(x->System.out.println(x));
-
+        System.out.println(">>>sort lambda<<<");
         //sortowanie z comparatorem na lambdzie v2
         lista.clear();
         lista=Thing.init();
@@ -98,5 +97,73 @@ public class Main {
             return t1.getAge()-t2.getAge();
         });
         lista.forEach(x->System.out.println(x));
+        System.out.println(">>>sort lambda<<<");
+        //sortowanie z comparatorem na lambdzie v1
+        lista.clear();
+        lista=Thing.init();
+        Collections.sort(lista,Comparator.comparing(Thing::getAge));
+        lista.forEach(x->System.out.println(x));
+
+        System.out.println(">>>reverse sort<<<");
+        lista.sort(Comparator.comparing(Thing::getAge).reversed());
+        lista.forEach(x->System.out.println(x));
+
+        System.out.println(">>>reverse sort stream<<<");
+        lista.stream()
+                .sorted(Comparator.comparing(Thing::getAge,Comparator.reverseOrder()))
+                .forEach(x->System.out.println(x));
+
+        System.out.println(">>>reverse sort stream<<<");
+        Comparator<Thing> reverseComparator =
+                (h1, h2) -> h2.getAge()-(h1.getAge());
+        lista.stream()
+                .sorted(reverseComparator)
+                .forEach(System.out::println);
+
+
+/***
+ *  Collector<T, ?, Map<K,U>> toMap(Function<? super T, ? extends K> keyMapper,
+ *  Function<? super T, ? extends U> valueMapper
+ *  BinaryOperator<U> mergeFunction)
+ */
+        System.out.println(">>>list to stream bez nadpisywania dubli<<<");
+        Map<String,String> thingMap1 = lista
+                .stream()
+                .collect(Collectors.toMap(Thing::getPesel,Thing::getName,(existing, replacement) -> existing));
+        thingMap1.entrySet()
+                .stream()
+                .forEach(System.out::println);
+
+        System.out.println(">>>list to stream z nadpisywania dubli<<<");
+        Map<String,String> thingMap2 = lista
+                .stream()
+                .collect(Collectors.toMap(Thing::getPesel,Thing::getName,(xxx, yyy) -> yyy));
+        thingMap2.entrySet()
+                .stream()
+                .forEach(System.out::println);
+
+        System.out.println(">>>filtrowanie elementów jednej listy w drugiej<<<");
+        List<Thing> listSmall=Thing.initSmall();
+        lista.stream()
+                .filter(thing -> listSmall.stream()//predicates in filter
+                        .anyMatch(thingSmall ->//second predicates in anyMatch
+                                thingSmall.getName().equals(thing.getName())))
+                .forEach(System.out::println);
+
+
+
+//        System.out.println(">>>list to stream<<<");
+//        Map<String,String> thingMap = lista.stream().collect(Collectors.toMap(Thing::getPesel,Thing::getName));
+//        thingMap.entrySet().stream().forEach(System.out::println);
+
+
+
+
+//
+//        lista.clear();
+//        lista=Thing.init();
+//        lista.forEach(x->System.out.println(x));
     }
+
+
 }
