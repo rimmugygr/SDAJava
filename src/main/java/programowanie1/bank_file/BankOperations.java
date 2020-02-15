@@ -1,32 +1,34 @@
 package programowanie1.bank_file;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import programowanie1.bank_file.domena.Bank;
+
 import java.util.List;
 import java.util.Map;
 
-public class Bank {
-    private String name;
-    private int clientId;
-    private Map<Integer,Client> clients;
-    private List<Account> accounts;
+public class BankOperations {
+    private Bank bank;
 
-    public Bank(String name) {
-        clientId =0;
-        this.name = name;
-        this.clients = new HashMap<>();
-        accounts = new ArrayList<>();
+    public BankOperations(Bank bank) {
+        this.bank = bank;
     }
+
+    public Client addClient(Client client) {
+        bank.getClients().put(bank.getClientIdAndIncrement(),client);
+        if(client.getNumerAccounts()>0){
+           bank.getAccounts().addAll(client.getListAccounts());
+        }
+        return client;
+    }
+
 
     public void addClients(List<Client> clients){
         for (Client client : clients) {
-            this.addClient(client);
+            addClient(client);
         }
-
     }
 
     private Account getAccount(String accountNumber){
-        for (Account account : accounts) {
+        for (Account account : bank.getAccounts()) {
             if (account.getAccountNumber().equals(accountNumber)) {
                 return account;
             }
@@ -34,11 +36,13 @@ public class Bank {
         return null;
     }
 
+
     public boolean payIn(String accountNumber, double value){
         if(getAccount(accountNumber)==null) return false;
         getAccount(accountNumber).payIn(value);
         return true;
     }
+
 
     public boolean payOff(String accountNumber, double value){
         if(getAccount(accountNumber)==null) return false;
@@ -46,25 +50,19 @@ public class Bank {
         return true;
     }
 
-    public Client addClient(Client client) {
-        clients.put(clientId++,client);
-        if(client.getNumerAccounts()>0){
-            accounts.addAll(client.getListAccounts());
-        }
-        return client;
-    }
+
 
     public String addAccount(Client client, String typeAccount) {
         Account account= new Account(typeAccount);
-        accounts.add(account);
+        bank.getAccounts().add(account);
         return client.addAccount(account);
     }
 
 
     public boolean removeClient(Client client){
 
-        if(client.getNumerAccounts()==0 && clients.containsValue(client)){
-            clients.remove(client);
+        if(client.getNumerAccounts()==0 && bank.getClients().containsValue(client)){
+            bank.getClients().remove(client);
             return true;
         }
         return false;
@@ -74,7 +72,7 @@ public class Bank {
 
     public void printClientAccounts(){
 //on steam
-        this.clients.entrySet().stream()
+        bank.getClients().entrySet().stream()
                 .map(x->x.getValue())//steam clients
                 .map(Client::getListAccounts)//steam list of accounts
                 .flatMap(x->x.stream())//steam accounts
@@ -85,32 +83,32 @@ public class Bank {
 
     public String getViewClient(){
 
-        String result="Bank: "+ name + " clients:\n";
-        for (Map.Entry<Integer, Client> integerClient : clients.entrySet()) {
+        String result="Bank: "+ bank.getName() + " clients:\n";
+        for (Map.Entry<Integer, Client> integerClient : bank.getClients().entrySet()) {
             result+="Client number: "+integerClient.getKey()+ " " +integerClient.getValue().getViewAccounts();
         }
         return result;
     }
 
     public String getViewWithClientSaldo(){
-        String result="Bank: "+ name + " clients:\n";
-        for (Map.Entry<Integer, Client> integerClient : clients.entrySet()) {
+        String result="Bank: "+ bank.getName() + " clients:\n";
+        for (Map.Entry<Integer, Client> integerClient : bank.getClients().entrySet()) {
             result+="Client number: "+integerClient.getKey()+ " " +integerClient.getValue().getViewAccountsWithSaldo();
         }
         return result;
     }
-    
+
     public String getViewAccount(){
-        String result="Bank: "+ name + " account:\n";
-        for (Account account : accounts) {
+        String result="Bank: "+ bank.getName() + " account:\n";
+        for (Account account : bank.getAccounts()) {
             result+=account.view();
         }
         return result;
     }
 
     public String getViewAccountWithSaldo(){
-        String result="Bank: "+ name + " account:\n";
-        for (Account account : accounts) {
+        String result="Bank: "+ bank.getName() + " account:\n";
+        for (Account account : bank.getAccounts()) {
             result+=account.viewWithSaldo();
         }
         return result;
