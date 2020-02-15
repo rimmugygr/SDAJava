@@ -70,7 +70,21 @@ public class Bank {
         return false;
     }
 
+
+
+    public void printClientAccounts(){
+
+        this.clients.entrySet().stream()
+                .map(x->x.getValue())
+                .map(Client::getListAccounts)
+                .flatMap(x->x.stream())
+                .forEach(System.out::println);
+    }
+
+
+
     public String getViewClient(){
+
         String result="Bank: "+ name + " clients:\n";
         for (Map.Entry<Integer, Client> integerClient : clients.entrySet()) {
             result+="Client number: "+integerClient.getKey()+ " " +integerClient.getValue().getViewAccounts();

@@ -2,9 +2,13 @@ package programowanie1.steam_sort;
 
 
 
+
 import programowanie1.steam_sort.pojo.Thing;
 
 import java.util.*;
+import java.util.function.BinaryOperator;
+import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -152,9 +156,12 @@ public class Main {
 
 
 
-//        System.out.println(">>>list to stream<<<");
-//        Map<String,String> thingMap = lista.stream().collect(Collectors.toMap(Thing::getPesel,Thing::getName));
-//        thingMap.entrySet().stream().forEach(System.out::println);
+        System.out.println(">>>list to stream with out implement lambda<<<");
+        Function<Thing,String>getKey=Thing::getPesel;
+        Function<Thing,String>getValue=x->x.getName();
+        BinaryOperator<String>compareKey=(oldKey,newKey)->newKey;//operator=function<object,object>
+        Map<String,String> thingMap = lista.stream().collect(Collectors.toMap(getKey,getValue,compareKey));
+        thingMap.entrySet().stream().forEach(System.out::println);
 
 
 
