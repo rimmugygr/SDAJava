@@ -73,11 +73,11 @@ public class Bank {
 
 
     public void printClientAccounts(){
-
+//on steam
         this.clients.entrySet().stream()
-                .map(x->x.getValue())
-                .map(Client::getListAccounts)
-                .flatMap(x->x.stream())
+                .map(x->x.getValue())//steam clients
+                .map(Client::getListAccounts)//steam list of accounts
+                .flatMap(x->x.stream())//steam accounts
                 .forEach(System.out::println);
     }
 
