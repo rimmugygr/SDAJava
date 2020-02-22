@@ -1,0 +1,33 @@
+S.O.L.I.D
+
+nazwy - selfdiscrable - samoopisujace siê musz¹ byæ
+
+dependency injection - wstrzykiwanie danych
+
+dependency inversion - zasada odwrocenia zale¿nosci
+
+Architektura warstowowa
+modu³y np: (kazdy ma swoje api)
+API - application interfejs
+SRV - servis ---- bisness logic
+DAO - dostêp do danych ---- np DB
+
+
+
+testy robimy pod specyfikacje
+
+owasp.org  <- ranking zagro¿eñ dla aplikacji
+
+sonar ling <- skanowanie statyczne kodu przed commitem , pluing do intelije idea
+
+testowanie jednostowe -> testowanie metod
+
+testy integracyjne -> do testowanie u¿ycia przez uzytkownika
+
+
+testy regresyjne -> testy w przypadku zmian kodu
+
+Test Driven Development TDD
+
+
+Baby Step - technika ma³ymi krokami
