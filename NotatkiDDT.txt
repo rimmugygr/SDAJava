@@ -31,3 +31,8 @@ Test Driven Development TDD
 
 
 Baby Step - technika ma³ymi krokami
+
+Composition over inheritance
+
+BDD Behavior Dypoly Development
+

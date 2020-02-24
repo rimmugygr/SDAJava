@@ -1,6 +1,11 @@
 package tdd;
 
+import lombok.Value;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.NullSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,6 +20,12 @@ class ValidateTest {
         assertEquals(validate.validatePostCode("99-999"),true);
     }
 
+    @ParameterizedTest
+    @ValueSource(strings={"12-123","32-343","99-999"})
+    void shouldReturnTrueForValidPostCode(String codeToTest) {
+        assertEquals(validate.validatePostCode(codeToTest),true);
+    }
+
     @Test
     void shouldReturnFalseForInvalidPostCode() {
         assertEquals(validate.validatePostCode("null"),false);
@@ -27,6 +38,13 @@ class ValidateTest {
         assertEquals(validate.validatePostCode("00-000"),false);
     }
 
+    @ParameterizedTest
+    @ValueSource(strings = {"null","aa-aaa","aaaaa","","12345","12-1y3","00-000"})
+    @NullSource
+    @NullAndEmptySource
+    void shouldReturnFalseForInvalidPostCode(String codeToTest) {
+        assertEquals(validate.validatePostCode(codeToTest),false);
+    }
 
 
 }
