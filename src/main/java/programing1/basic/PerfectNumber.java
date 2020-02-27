@@ -1,4 +1,4 @@
-package programing1;
+package programing1.basic;
 /*Napisz metodę
 public static boolean isPerfectNumber(int year)
         sprawdzającą czy podana liczba jest równa sumie wszystkich jej dzielników.

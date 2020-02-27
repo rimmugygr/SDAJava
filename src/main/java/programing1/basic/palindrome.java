@@ -1,4 +1,4 @@
-package programing1;
+package programing1.basic;
 
 import java.util.Scanner;
 /*Napisz metodę

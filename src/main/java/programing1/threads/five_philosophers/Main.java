@@ -1,9 +1,9 @@
-package programing1.threads.five_filophsoper;
+package programing1.threads.five_philosophers;
 
 public class Main {
     public static void main(String[] args) {
 
-        Philosophers[] philosophers= new Philosophers[5];
+        Philosopher[] philosophers= new Philosopher[5];
         Object[] forks= new Object[philosophers.length];
 
         for (int i = 0; i < forks.length; i++) {
@@ -14,9 +14,9 @@ public class Main {
             Object rightFork = forks[(i+1) % forks.length];
 
             if (i==philosophers.length-1){  //przeciwko zakleszczeiu sie
-                philosophers[i]=new Philosophers(rightFork,leftFork);
+                philosophers[i]=new Philosopher(rightFork,leftFork);
             }else {
-                philosophers[i]=new Philosophers(leftFork,rightFork);
+                philosophers[i]=new Philosopher(leftFork,rightFork);
             }
 
 

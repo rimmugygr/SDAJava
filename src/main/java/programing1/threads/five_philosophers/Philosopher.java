@@ -1,11 +1,11 @@
-package programing1.threads.five_filophsoper;
+package programing1.threads.five_philosophers;
 
-public class Philosophers implements Runnable {
+public class Philosopher implements Runnable {
     private Object leftFolk;
     private Object rightFolk;
     private int countEat;
 
-    public Philosophers(Object leftFolk, Object rightFolk) {
+    public Philosopher(Object leftFolk, Object rightFolk) {
         this.leftFolk = leftFolk;
         this.rightFolk = rightFolk;
         countEat=0;
