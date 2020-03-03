@@ -30,5 +30,7 @@ public class Main {
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
+
+        executorService.shutdown();
     }
 }
