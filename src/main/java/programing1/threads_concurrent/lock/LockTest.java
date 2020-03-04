@@ -7,8 +7,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class ReentrantLockTest {
-    protected static final Logger LOG = Logger.getLogger(ReentrantLockTest.class);
+public class LockTest {
+    protected static final Logger LOG = Logger.getLogger(LockTest.class);
 
     public static void main(String[] args) {
         ExecutorService executorService = Executors.newFixedThreadPool(2);

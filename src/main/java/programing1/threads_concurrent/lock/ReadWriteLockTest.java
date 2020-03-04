@@ -7,13 +7,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-public class ReentrantReadWriteLockTest {
-    protected static final Logger LOG = Logger.getLogger(ReentrantReadWriteLockTest.class);
+public class ReadWriteLockTest {
+    protected static final Logger LOG = Logger.getLogger(ReadWriteLockTest.class);
 
     public static void main(String[] args) {
         ExecutorService executorService = Executors.newFixedThreadPool(2);
