@@ -38,3 +38,7 @@ BDD Behavior Dypoly Development
 
 final dla class i collection przy deklaracji ---- nie mo¿na wtedy new u¿yæ poza deklaracj¹, ale mo¿na updetowaæ
 final dla typów prostych --- nic nie zmienisz
+
+Optional:
+.orElseGet -->wykonie zalezy od warunku
+.orElse -->zawsze siê wykonuje

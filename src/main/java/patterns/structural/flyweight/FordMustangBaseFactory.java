@@ -12,9 +12,8 @@ public class FordMustangBaseFactory {
         if(fordMustangBases.size()>0){
             fordMustangBase = fordMustangBases.stream()
                     .filter(f->color.equals(f.getColor()))
-                    .findFirst()
-                    .orElse(new FordMustangBase(color));
-
+                    .findAny()
+                    .orElseGet(()->new FordMustangBase(color));//nie wykona się zawsze tak jak .orElse();
         } else {
             fordMustangBase = new FordMustangBase(color);
         }
