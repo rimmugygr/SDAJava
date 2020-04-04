@@ -25,20 +25,8 @@ public class Cash {
         this.Money = this.Money.add(money.negate());
     }
 
-    public BigDecimal getMoney() {
-        return Money;
-    }
-
-    public void setMoney(BigDecimal money) {
-        this.Money = money;
-    }
-
-    public Currency getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(Currency currency) {
-        this.currency = currency;
+    public boolean checkCurrency(Currency currency) {
+        return currency.equals(this.currency);
     }
 
     @Override

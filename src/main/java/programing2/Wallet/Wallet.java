@@ -14,7 +14,7 @@ public class Wallet {
     public void addCash(BigDecimal money, Currency currency) {
         boolean isCurrencyInWallet = false;
         for (int i = 0; i < cash.size(); i++) {
-            if (cash.get(i).getCurrency()==currency){
+            if (cash.get(i).checkCurrency(currency)){
                 cash.get(i).addCash(money);
                 isCurrencyInWallet = true;
             }
@@ -27,7 +27,7 @@ public class Wallet {
     public void removeCash(BigDecimal money, Currency currency) {
         boolean isCurrencyInWallet = false;
         for (int i = 0; i < cash.size(); i++) {
-            if (cash.get(i).getCurrency()==currency){
+            if (cash.get(i).checkCurrency(currency)){
                 cash.get(i).removeCash(money);
                 isCurrencyInWallet = true;
             }
