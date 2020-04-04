@@ -4,35 +4,54 @@ package programing2.Wallet;
 import java.math.BigDecimal;
 
 public class Cash {
-    private BigDecimal Money;
+    private BigDecimal amount;
     private Currency currency;
 
-    public Cash(BigDecimal Money, Currency currency) {
-        this.Money = Money;
+    public Cash(Double amount, Currency currency) {
+        this.amount = new BigDecimal(amount);
+        this.currency = currency;
+    }
+
+    public Cash(Double amount) {
+        this.amount = new BigDecimal(amount);
+        this.currency = Currency.PLN;
+    }
+
+    public Cash(BigDecimal amount, Currency currency) {
+        this.amount = amount;
         this.currency = currency;
     }
 
     public Cash(Currency currency) {
-        this.Money = BigDecimal.ZERO;
+        this.amount = BigDecimal.ZERO;
         this.currency = currency;
     }
 
-    public void addCash(BigDecimal money) {
-        this.Money = this.Money.add(money);
+
+    public void addCash(Cash cashToAdd) {
+        this.amount = this.amount.add(cashToAdd.amount);
     }
 
-    public void removeCash(BigDecimal money) {
-        this.Money = this.Money.add(money.negate());
+    public void removeCash(Cash cashToAdd) {
+        this.amount = this.amount.add(cashToAdd.amount.negate());
     }
 
-    public boolean checkCurrency(Currency currency) {
-        return currency.equals(this.currency);
+    public boolean checkCurrency(Cash cash) {
+        return this.currency.equals(cash.currency);
+    }
+
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
     }
 
     @Override
     public String toString() {
         return "Cash{" +
-                "value=" + Money +
+                "amount=" + amount +
                 ", currency=" + currency +
                 '}';
     }

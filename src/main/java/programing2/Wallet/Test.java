@@ -8,19 +8,22 @@ public class Test {
     private static final Logger logger = LogManager.getLogger(Test.class);
 
     public static void main(String[] args) {
+        Cash smallMoney = new Cash((double) 543);
+        Cash bigMoney = new Cash((double) 678);
+        Cash mediumMoney =  new Cash((double) 765);
+
         Person adolf = new Person("Adolf","Kowalski");
-        adolf.addMoney(100);
+        adolf.addMoney(mediumMoney);
 
         Person jozef = new Person("Jozef","Kowalski");
-        jozef.addMoney(200);
+        jozef.addMoney(bigMoney);
 
 
         logger.info(adolf.toString());
         logger.info(jozef.toString());
 
         //transaction
-        adolf.removeMoney(50);
-        jozef.addMoney(50);
+        Person.transaction(jozef,adolf,smallMoney);
 
         logger.info(adolf.toString());
         logger.info(jozef.toString());

@@ -1,8 +1,13 @@
 package programing2.Wallet;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import java.math.BigDecimal;
 
 public class Person {
+    private static final Logger logger = LogManager.getLogger(Person.class);
+
     private String firstName;
     private String lastName;
     private Wallet wallet;
@@ -13,29 +18,31 @@ public class Person {
         this.wallet = new Wallet();
     }
 
-    public void addMoney(double money, Currency currency) {
-        this.wallet.addCash(BigDecimal.valueOf(money),currency);
+    public static void transaction(Person sourcePerson, Person targetPerson, Cash cashGiven){
+        logger.info(sourcePerson.getFirstName() + " give to " + targetPerson.getFirstName() + " " + cashGiven.toString());
+        sourcePerson.wallet.removeCash(cashGiven);
+        targetPerson.wallet.addCash(cashGiven);
     }
 
-    public void addMoney(double money) {
-        this.wallet.addCash(BigDecimal.valueOf(money),Currency.PLN);
+    public void addMoney(Cash cash) {
+        this.wallet.addCash(cash);
     }
 
-
-    public void removeMoney(double money, Currency currency) {
-        this.wallet.removeCash(BigDecimal.valueOf(money),currency);
+    public void removeMoney(Cash cash){
+        this.wallet.removeCash(cash);
     }
 
-    public void removeMoney(double money) {
-        this.wallet.removeCash(BigDecimal.valueOf(money),Currency.PLN);
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
     }
 
     @Override
     public String toString() {
-        return "Person{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", wallet=" + wallet +
-                '}';
+        return "Person " + firstName + " " + lastName +
+                " has : " + wallet ;
     }
 }
