@@ -12,12 +12,35 @@ public class Wallet {
     }
 
     public void addCash(BigDecimal money, Currency currency) {
-        for (Cash c : cash) {
-            
+        boolean isCurrencyInWallet = false;
+        for (int i = 0; i < cash.size(); i++) {
+            if (cash.get(i).getCurrency()==currency){
+                cash.get(i).addCash(money);
+                isCurrencyInWallet = true;
+            }
         }
-        
-        this.cash.add(new Cash(money,currency));
-        
-        
+        if (isCurrencyInWallet==false) {
+            this.cash.add(new Cash(money,currency));
+        }
+    }
+
+    public void removeCash(BigDecimal money, Currency currency) {
+        boolean isCurrencyInWallet = false;
+        for (int i = 0; i < cash.size(); i++) {
+            if (cash.get(i).getCurrency()==currency){
+                cash.get(i).removeCash(money);
+                isCurrencyInWallet = true;
+            }
+        }
+        if (isCurrencyInWallet==false) {
+            this.cash.add(new Cash(money.negate(),currency));
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Wallet{" +
+                "cash=" + cash +
+                '}';
     }
 }
