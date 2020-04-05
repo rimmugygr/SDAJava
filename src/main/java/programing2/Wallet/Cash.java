@@ -1,6 +1,10 @@
 package programing2.Wallet;
 
 
+import programing2.Wallet.exceptions.IncorrectCurrencyException;
+import programing2.Wallet.exceptions.IncorretAmountExeption;
+import programing2.Wallet.exceptions.NoEnoughMoneyException;
+
 import java.math.BigDecimal;
 
 public class Cash {
@@ -27,16 +31,24 @@ public class Cash {
         this.currency = currency;
     }
 
-    public void addCash(Cash cashToAdd) {
-        this.amount = this.amount.add(cashToAdd.amount);
+    public void addCash(Cash cashToAdd) throws IncorrectCurrencyException, IncorretAmountExeption {
+        if (isValidatedCash(cashToAdd)) {
+            this.amount = this.amount.add(cashToAdd.getAmount());
+        }
     }
 
-    public void removeCash(Cash cashToAdd) {
-        this.amount = this.amount.add(cashToAdd.amount.negate());
+
+    public boolean removeCash(Cash cashToRemove) throws IncorrectCurrencyException, NoEnoughMoneyException, IncorretAmountExeption {
+        if (isEnoughAmount(cashToRemove) && isValidatedCash(cashToRemove)) {
+            this.amount = this.amount.add(cashToRemove.getAmount().negate());
+            return true;
+        } else {
+            throw new NoEnoughMoneyException();
+        }
     }
 
-    public boolean checkCurrency(Cash cash) {
-        return this.currency.equals(cash.currency);
+    public boolean isSameCurrency(Cash cash) {
+        return this.currency.equals(cash.getCurrency());
     }
 
     public Currency getCurrency() {
@@ -58,6 +70,17 @@ public class Cash {
     public BigDecimal getAmount() {
         return amount;
     }
+
+    private boolean isValidatedCash(Cash cash) throws IncorrectCurrencyException, IncorretAmountExeption {
+        if (cash.getAmount().compareTo(BigDecimal.ZERO)<0) {
+            throw new  IncorretAmountExeption();
+        }
+        if (!isSameCurrency(cash)) {
+            throw new IncorrectCurrencyException();
+        }
+        return true;
+    }
+
 
     @Override
     public String toString() {

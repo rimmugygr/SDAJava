@@ -1,11 +1,10 @@
 package programing2.Wallet;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
+import programing2.Wallet.exceptions.IncorrectCurrencyException;
+import programing2.Wallet.exceptions.IncorretAmountExeption;
+import programing2.Wallet.exceptions.NoEnoughMoneyException;
 
 import java.math.BigDecimal;
 
@@ -19,6 +18,7 @@ class CashTest {
     private Cash cashTemp;
     private Cash cashUSD;
     private Cash cashEURO;
+    private Exception IncorrectCurrencyException;
 
 //    @BeforeAll
 //    static void initAll() {
@@ -28,29 +28,58 @@ class CashTest {
 //        cash3 = new Cash((double) 30,Currency.PLN);
 //        cashTemp = new Cash(Currency.PLN);
 //    }
-    @BeforeEach
-    void initEach() {
-        cash0 = new Cash(BigDecimal.ZERO , Currency.PLN);
-        cash1 = new Cash(BigDecimal.TEN,Currency.PLN);
-        cash2 = new Cash((double) 20,Currency.PLN);
-        cash3 = new Cash((double) 30,Currency.PLN);
-        cashTemp = new Cash(Currency.PLN);
-        cashUSD = new Cash(BigDecimal.ZERO, Currency.USD);
-        cashEURO = new Cash(BigDecimal.valueOf(10),Currency.EURO);
-    }
+//    @BeforeEach
+//    void initEach() {
+//        cash0 = new Cash(BigDecimal.ZERO , Currency.PLN);
+//        cash1 = new Cash(BigDecimal.TEN,Currency.PLN);
+//        cash2 = new Cash((double) 20,Currency.PLN);
+//        cash3 = new Cash((double) 30,Currency.PLN);
+//        cashTemp = new Cash(Currency.PLN);
+//        cashUSD = new Cash(BigDecimal.ZERO, Currency.USD);
+//        cashEURO = new Cash(BigDecimal.valueOf(10),Currency.EURO);
+//    }
 
     @Test
-    void isAddCashTest() {
+    void isAddCashAmountTest() throws IncorrectCurrencyException, IncorretAmountExeption {
+        cash0 = new Cash(BigDecimal.ZERO, Currency.PLN);
+        cashTemp = new Cash(BigDecimal.ZERO, Currency.PLN);
         cash0.addCash(cashTemp);
-        assertEquals(cash0.getAmount(),cash0.getAmount());
-        cash0.addCash(cash1);
-        assertEquals(cash0.getAmount(),cash1.getAmount());
-        cash1.addCash(cash2);
-        assertEquals(cash1.getAmount(),cash3.getAmount());
+        assertEquals(BigDecimal.ZERO, cash0.getAmount());
+
+        cash1 = new Cash(BigDecimal.ZERO, Currency.PLN);
+        cashTemp = new Cash(BigDecimal.TEN, Currency.PLN);
+        cash1.addCash(cashTemp);
+        assertEquals(BigDecimal.TEN,cash1.getAmount());
+
+        cash2 = new Cash((double) 50, Currency.USD);
+        cashTemp = new Cash((double) 100, Currency.USD);
+        cash2.addCash(cashTemp);
+        assertEquals(BigDecimal.valueOf(150),cash2.getAmount());
     }
 
     @Test
-    void isRemoveCash() {
+    void isAddCashExceptionTest()  {
+        cash0 = new Cash(BigDecimal.ZERO, Currency.PLN);
+        cashTemp = new Cash(BigDecimal.ZERO, Currency.USD);
+        assertThrows(IncorrectCurrencyException, cash0.addCash(cashTemp));
+
+
+        cash1 = new Cash(BigDecimal.ZERO, Currency.PLN);
+        cashTemp = new Cash(BigDecimal.TEN, Currency.PLN);
+        cash1.addCash(cashTemp);
+        assertEquals(BigDecimal.TEN,cash1.getAmount());
+
+        cash2 = new Cash((double) 50, Currency.USD);
+        cashTemp = new Cash((double) 100, Currency.USD);
+        cash2.addCash(cashTemp);
+        assertEquals(BigDecimal.valueOf(150),cash2.getAmount());
+    }
+
+
+
+
+    @Test
+    void isRemoveCash() throws IncorrectCurrencyException, NoEnoughMoneyException, IncorretAmountExeption {
         cash0.removeCash(cashTemp);
         assertEquals(cash0.getAmount(),cash0.getAmount());
         cash3.removeCash(cash2);
@@ -61,11 +90,11 @@ class CashTest {
 
     @Test
     void isCheckCurrency() {
-        assertTrue(cashTemp.checkCurrency(cash0));
-        assertTrue(cashUSD.checkCurrency(new Cash(Currency.USD)));
+        assertTrue(cashTemp.isSameCurrency(cash0));
+        assertTrue(cashUSD.isSameCurrency(new Cash(Currency.USD)));
 
-        assertFalse(cashUSD.checkCurrency(cashEURO));
-        assertFalse(cashEURO.checkCurrency(cashTemp));
+        assertFalse(cashUSD.isSameCurrency(cashEURO));
+        assertFalse(cashEURO.isSameCurrency(cashTemp));
     }
 
 

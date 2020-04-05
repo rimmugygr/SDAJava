@@ -2,6 +2,9 @@ package programing2.Wallet;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import programing2.Wallet.exceptions.IncorrectCurrencyException;
+import programing2.Wallet.exceptions.IncorretAmountExeption;
+import programing2.Wallet.exceptions.NoEnoughMoneyException;
 
 public class Person {
     private static final Logger logger = LogManager.getLogger(Person.class);
@@ -16,31 +19,52 @@ public class Person {
         this.wallet = new Wallet();
     }
 
-    public static void transaction(Person sourcePerson, Person targetPerson, Cash cashGiven){
+    public static void transaction(Person sourcePerson, Person targetPerson, Cash cashGiven) throws IncorrectCurrencyException, NoEnoughMoneyException, IncorretAmountExeption {
         logger.info(sourcePerson.getFirstName() + " give to " + targetPerson.getFirstName() + " " + cashGiven.toString());
         sourcePerson.wallet.removeCash(cashGiven);
         targetPerson.wallet.addCash(cashGiven);
     }
 
-    public void giveCashTo(Person targetPerson, Cash cashGiven) {
+    public void giveCashTo(Person targetPerson, Cash cashGiven) throws IncorrectCurrencyException, NoEnoughMoneyException, IncorretAmountExeption {
         logger.info(this.getFirstName() + " give to " + targetPerson.getFirstName() + " " + cashGiven.toString());
         this.wallet.removeCash(cashGiven);
         targetPerson.wallet.addCash(cashGiven);
     }
 
     public void removeCashFrom(Person sourcePerson, Cash cashGiven) {
+
+        sourcePerson.removeMoney(cashGiven);
+        this.addMoney(cashGiven);
         logger.info(sourcePerson.getFirstName() + " give to " + this.getFirstName() + " " + cashGiven.toString());
-        sourcePerson.wallet.removeCash(cashGiven);
-        this.wallet.addCash(cashGiven);
+
     }
 
     public void addMoney(Cash cash) {
-        logger.info(this.getFirstName() + " get  " + cash.toString());
-        this.wallet.addCash(cash);
+        try {
+            this.wallet.addCash(cash);
+        } catch (IncorrectCurrencyException | IncorretAmountExeption e) {
+            e.printStackTrace();
+        } finally {
+            logger.info(this.getFirstName() + " get  " + cash.toString());
+        }
     }
 
-    public void removeMoney(Cash cash){
-        this.wallet.removeCash(cash);
+    public boolean removeMoney(Cash cash) {
+        try {
+            System.out.println(this.wallet.toString()+"1aaaaa");
+            this.wallet.removeCash(cash);
+            System.out.println(this.wallet.toString()+"2aaaaa");
+        } catch (IncorrectCurrencyException | IncorretAmountExeption e) {
+            e.printStackTrace();
+            return false;
+        } catch (NoEnoughMoneyException e) {
+            logger.info(this.getFirstName() + " dont have " + cash.toString());
+            e.printStackTrace();
+            return false;
+        } finally {
+            logger.info(this.getFirstName() + " remove  " + cash.toString());
+            return  true;
+        }
     }
 
     public String getFirstName() {
@@ -53,7 +77,7 @@ public class Person {
 
     @Override
     public String toString() {
-        return "Person " + firstName + " " + lastName +
+        return "Person " + firstName + //" " + lastName +
                 " has : " + wallet ;
     }
 }

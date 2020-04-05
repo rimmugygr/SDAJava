@@ -1,66 +1,49 @@
 package programing2.Wallet;
 
+import programing2.Wallet.exceptions.IncorrectCurrencyException;
+import programing2.Wallet.exceptions.IncorretAmountExeption;
+import programing2.Wallet.exceptions.NoEnoughMoneyException;
+
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Wallet {
     private List<Cash> moneyList;
-    private List<Cash> creditList;
     
     {
         this.moneyList = new ArrayList<>();
-        this.creditList = new ArrayList<>();
     }
 
-    public void addCash(Cash cashToAdd) {
-        Cash cashInMoney =  findMoney(cashToAdd);
-        if (cashInMoney.isZeroAmount() && !findCredit(cashToAdd).isZeroAmount()) {
-            Cash cashInCredit = findCredit(cashToAdd);
-            if (cashInCredit.isEnoughAmount(cashToAdd)){
-                cashInCredit.removeCash(cashToAdd);
-            } else {
-                cashInMoney.addCash(cashToAdd);
-                cashInMoney.removeCash(cashInCredit);
-                cashInCredit.setAmountToZero();
-            }
+    public void addCash(Cash cashToAdd) throws IncorrectCurrencyException, IncorretAmountExeption {
+        Cash cashInWallet =  findCash(cashToAdd);
+        cashInWallet.addCash(cashToAdd);
+    }
+
+
+    public Cash removeCash(Cash cashToRemove) throws IncorrectCurrencyException, NoEnoughMoneyException, IncorretAmountExeption {
+        Cash cashInWallet =  findCash(cashToRemove);
+        if(cashInWallet.isEnoughAmount(cashToRemove)){
+            cashInWallet.removeCash(cashToRemove);
+            return new Cash(BigDecimal.ZERO,cashToRemove.getCurrency());
         } else {
-            cashInMoney.addCash(cashToAdd);
+            return new Cash(cashInWallet.getAmount(),cashInWallet.getCurrency());
         }
     }
 
-    public void removeCash(Cash cashToRemove) {
-        Cash cashInMoney =  findMoney(cashToRemove);
-        if(cashInMoney.isEnoughAmount(cashToRemove)){
-            cashInMoney.removeCash(cashToRemove);
-        } else {
-            Cash cashInCredit = findCredit(cashToRemove);
-            cashInCredit.addCash(cashToRemove);
-            cashInCredit.removeCash(cashInMoney);
-            cashInMoney.setAmountToZero();
-        }
-    }
-
-    private Cash findMoney(Cash cashToFind){
-        return findCash(cashToFind, this.moneyList);
-    }
-
-    private Cash findCredit(Cash cashToFind){
-        return findCash(cashToFind, this.creditList);
-    }
-
-    private Cash findCash(Cash cashToFind, List<Cash> cashList){
-        for (int i = 0; i < cashList.size(); i++) {
-            if (cashList.get(i).checkCurrency(cashToFind)){
-                return cashList.get(i);
+    private Cash findCash(Cash cashToFind){
+        for (int i = 0; i < moneyList.size(); i++) {
+            if (moneyList.get(i).isSameCurrency(cashToFind)){
+                return moneyList.get(i);
             }
         }
         Cash newCash = new Cash(cashToFind.getCurrency());
-        cashList.add(newCash);
+        moneyList.add(newCash);
         return newCash;
     }
 
     @Override
     public String toString() {
-        return "\nMoney : "+ moneyList +"\nCredit : "+ creditList;
+        return String.valueOf(moneyList);
     }
 }

@@ -3,6 +3,9 @@ package programing2.Wallet;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import programing2.Wallet.exceptions.IncorrectCurrencyException;
+import programing2.Wallet.exceptions.IncorretAmountExeption;
+import programing2.Wallet.exceptions.NoEnoughMoneyException;
 
 /**
  * Stwórz model: Osoba, Portfel, Pieniadze
@@ -21,7 +24,7 @@ import org.apache.log4j.Logger;
 public class Main {
     private static final Logger logger = LogManager.getLogger(Main.class);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IncorrectCurrencyException, IncorretAmountExeption, NoEnoughMoneyException {
         Cash smallMoneyPLN = new Cash((double) 543);
         Cash bigMoneyPLN = new Cash((double) 678);
         Cash mediumMoneyPLN =  new Cash((double) 765);
@@ -32,32 +35,38 @@ public class Main {
         Person adolf = new Person("Adolf","Kowalski");
         adolf.addMoney(mediumMoneyPLN);
         adolf.addMoney(smallMoneyEURO);
-
-        Person jozef = new Person("Jozef","Kowalski");
-        jozef.addMoney(bigMoneyPLN);
-        jozef.addMoney(mediumMoneyEURO);
-
         logger.info(adolf.toString());
-        logger.info(jozef.toString());
-
-        //transaction
-        Person.transaction(jozef,adolf,smallMoneyPLN);
+        logger.info(adolf.removeMoney(mediumMoneyPLN));
         logger.info(adolf.toString());
-        logger.info(jozef.toString());
-
-        adolf.giveCashTo(jozef, mediumMoneyEURO);
+        logger.info(adolf.removeMoney(mediumMoneyPLN));
         logger.info(adolf.toString());
-        logger.info(jozef.toString());
 
-        jozef.giveCashTo(adolf, mediumMoneyPLN);
-        logger.info(adolf.toString());
-        logger.info(jozef.toString());
 
-        jozef.addMoney(smallMoneyPLN);
-        logger.info(jozef.toString());
-
-        jozef.addMoney(smallMoneyPLN);
-        logger.info(jozef.toString());
+//        Person jozef = new Person("Jozef","Kowalski");
+//        jozef.addMoney(bigMoneyPLN);
+//        jozef.addMoney(mediumMoneyEURO);
+//
+//        logger.info(adolf.toString());
+//        logger.info(jozef.toString());
+//
+//        //transaction
+//        Person.transaction(jozef,adolf,smallMoneyPLN);
+//        logger.info(adolf.toString());
+//        logger.info(jozef.toString());
+//
+//        adolf.giveCashTo(jozef, mediumMoneyEURO);
+//        logger.info(adolf.toString());
+//        logger.info(jozef.toString());
+//
+//        jozef.giveCashTo(adolf, mediumMoneyPLN);
+//        logger.info(adolf.toString());
+//        logger.info(jozef.toString());
+//
+//        jozef.addMoney(smallMoneyPLN);
+//        logger.info(jozef.toString());
+//
+//        jozef.addMoney(smallMoneyPLN);
+//        logger.info(jozef.toString());
 
     }
 }
