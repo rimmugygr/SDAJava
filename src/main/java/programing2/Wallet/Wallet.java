@@ -16,7 +16,7 @@ public class Wallet {
         Cash cashInMoney =  findMoney(cashToAdd);
         if (cashInMoney.isZeroAmount() && !findCredit(cashToAdd).isZeroAmount()) {
             Cash cashInCredit = findCredit(cashToAdd);
-            if (cashInCredit.isEnougtAmount(cashToAdd)){
+            if (cashInCredit.isEnoughAmount(cashToAdd)){
                 cashInCredit.removeCash(cashToAdd);
             } else {
                 cashInMoney.addCash(cashToAdd);
@@ -30,7 +30,7 @@ public class Wallet {
 
     public void removeCash(Cash cashToRemove) {
         Cash cashInMoney =  findMoney(cashToRemove);
-        if(cashInMoney.isEnougtAmount(cashToRemove)){
+        if(cashInMoney.isEnoughAmount(cashToRemove)){
             cashInMoney.removeCash(cashToRemove);
         } else {
             Cash cashInCredit = findCredit(cashToRemove);

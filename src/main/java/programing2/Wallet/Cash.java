@@ -27,15 +27,9 @@ public class Cash {
         this.currency = currency;
     }
 
-
     public void addCash(Cash cashToAdd) {
         this.amount = this.amount.add(cashToAdd.amount);
     }
-
-    /**
-     * remove cash
-     * if not enough amount then return cash difference and set amount to zero
-     * */
 
     public void removeCash(Cash cashToAdd) {
         this.amount = this.amount.add(cashToAdd.amount.negate());
@@ -49,17 +43,21 @@ public class Cash {
         return currency;
     }
 
-
-    public boolean isEnougtAmount(Cash cash){
+    public boolean isEnoughAmount(Cash cash){
         return this.amount.compareTo(cash.amount)>=0;
     }
+
     public boolean isZeroAmount(){
         return this.amount.equals(BigDecimal.ZERO);
     }
+
     public void setAmountToZero(){
         this.amount=BigDecimal.ZERO;
     }
 
+    public BigDecimal getAmount() {
+        return amount;
+    }
 
     @Override
     public String toString() {

@@ -18,8 +18,8 @@ import org.apache.log4j.Logger;
 
 
 
-public class Test {
-    private static final Logger logger = LogManager.getLogger(Test.class);
+public class Main {
+    private static final Logger logger = LogManager.getLogger(Main.class);
 
     public static void main(String[] args) {
         Cash smallMoneyPLN = new Cash((double) 543);
