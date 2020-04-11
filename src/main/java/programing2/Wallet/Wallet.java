@@ -1,7 +1,7 @@
 package programing2.Wallet;
 
 import programing2.Wallet.exceptions.IncorrectCurrencyException;
-import programing2.Wallet.exceptions.IncorretAmountExeption;
+import programing2.Wallet.exceptions.IncorrectAmountException;
 import programing2.Wallet.exceptions.NoEnoughMoneyException;
 
 import java.math.BigDecimal;
@@ -15,13 +15,13 @@ public class Wallet {
         this.moneyList = new ArrayList<>();
     }
 
-    public void addCash(Cash cashToAdd) throws IncorrectCurrencyException, IncorretAmountExeption {
+    public void addCash(Cash cashToAdd) throws IncorrectCurrencyException, IncorrectAmountException {
         Cash cashInWallet =  findCash(cashToAdd);
         cashInWallet.addCash(cashToAdd);
     }
 
 
-    public Cash removeCash(Cash cashToRemove) throws IncorrectCurrencyException, NoEnoughMoneyException, IncorretAmountExeption {
+    public Cash removeCash(Cash cashToRemove) throws IncorrectCurrencyException, NoEnoughMoneyException, IncorrectAmountException {
         Cash cashInWallet =  findCash(cashToRemove);
         if(cashInWallet.isEnoughAmount(cashToRemove)){
             cashInWallet.removeCash(cashToRemove);

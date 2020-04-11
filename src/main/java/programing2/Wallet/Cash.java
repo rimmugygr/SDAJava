@@ -2,11 +2,15 @@ package programing2.Wallet;
 
 
 import programing2.Wallet.exceptions.IncorrectCurrencyException;
-import programing2.Wallet.exceptions.IncorretAmountExeption;
+import programing2.Wallet.exceptions.IncorrectAmountException;
 import programing2.Wallet.exceptions.NoEnoughMoneyException;
 
 import java.math.BigDecimal;
 
+/**
+ * Class represent money
+ * Has field with amount and currency
+ */
 public class Cash {
     private BigDecimal amount;
     private Currency currency;
@@ -31,14 +35,34 @@ public class Cash {
         this.currency = currency;
     }
 
-    public void addCash(Cash cashToAdd) throws IncorrectCurrencyException, IncorretAmountExeption {
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    /**
+     * Add value of amount from object in param
+     * @param cashToAdd
+     * @throws IncorrectCurrencyException when param have different filed currency
+     * @throws IncorrectAmountException when param have negative value of field amount
+     */
+    public void addCash(Cash cashToAdd) throws IncorrectCurrencyException, IncorrectAmountException {
         if (isValidatedCash(cashToAdd)) {
             this.amount = this.amount.add(cashToAdd.getAmount());
         }
     }
 
-
-    public boolean removeCash(Cash cashToRemove) throws IncorrectCurrencyException, NoEnoughMoneyException, IncorretAmountExeption {
+    /**
+     * Remove value of amount this object, value is get from object in param
+     * @param cashToRemove
+     * @throws IncorrectCurrencyException when param have different filed currency
+     * @throws IncorrectAmountException when param have negative value of field amount
+     * @throws NoEnoughMoneyException when param have higher value of field amount
+     */
+    public boolean removeCash(Cash cashToRemove) throws IncorrectCurrencyException, NoEnoughMoneyException, IncorrectAmountException {
         if (isEnoughAmount(cashToRemove) && isValidatedCash(cashToRemove)) {
             this.amount = this.amount.add(cashToRemove.getAmount().negate());
             return true;
@@ -47,36 +71,40 @@ public class Cash {
         }
     }
 
+    /**
+     * Check is the same currency
+     * @param cash
+     * @return true if is the same currency other false
+     */
     public boolean isTheSameCurrency(Cash cash) {
         return this.currency.equals(cash.getCurrency());
     }
 
-    public Currency getCurrency() {
-        return currency;
-    }
-
+    /**
+     * Check is enough value amount to remove,  value is get from object in param
+     * @param cash
+     * @return true if value amount is bigger than value amount of param or the same other false
+     */
     public boolean isEnoughAmount(Cash cash){
         return this.amount.compareTo(cash.amount)>=0;
     }
 
+    /**
+     * @return true if vale of amount is zero other false
+     */
     public boolean isZeroAmount(){
         return this.amount.equals(BigDecimal.ZERO);
     }
 
-    public BigDecimal getAmount() {
-        return amount;
-    }
-
-    private boolean isValidatedCash(Cash cash) throws IncorrectCurrencyException, IncorretAmountExeption {
+    private boolean isValidatedCash(Cash cash) throws IncorrectCurrencyException, IncorrectAmountException {
         if (cash.getAmount().compareTo(BigDecimal.ZERO)<0) {
-            throw new  IncorretAmountExeption();
+            throw new IncorrectAmountException();
         }
         if (!isTheSameCurrency(cash)) {
             throw new IncorrectCurrencyException();
         }
         return true;
     }
-
 
     @Override
     public String toString() {

@@ -2,7 +2,7 @@ package programing2.Wallet;
 
 import org.junit.jupiter.api.*;
 import programing2.Wallet.exceptions.IncorrectCurrencyException;
-import programing2.Wallet.exceptions.IncorretAmountExeption;
+import programing2.Wallet.exceptions.IncorrectAmountException;
 import programing2.Wallet.exceptions.NoEnoughMoneyException;
 
 import java.math.BigDecimal;
@@ -29,13 +29,13 @@ class CashTest {
         }
         @DisplayName("add zero value")
         @Test
-        void isAddCashAmountZeroTest() throws IncorrectCurrencyException, IncorretAmountExeption {
+        void isAddCashAmountZeroTest() throws IncorrectCurrencyException, IncorrectAmountException {
             cashTenPLN.addCash(cashZeroPLN);
             assertEquals(BigDecimal.TEN, cashTenPLN.getAmount());
         }
         @DisplayName("add some value")
         @Test
-        void isAddCashAmountSomeValueTest() throws IncorrectCurrencyException, IncorretAmountExeption {
+        void isAddCashAmountSomeValueTest() throws IncorrectCurrencyException, IncorrectAmountException {
             cashThirtyPLN.addCash(cashTenPLN);
             assertEquals(BigDecimal.valueOf(40), cashThirtyPLN.getAmount());
         }
@@ -47,7 +47,7 @@ class CashTest {
         @DisplayName("throw exception at wrong amount")
         @Test
         void isAddCashThrowIncorrectAmountException(){
-            assertThrows(IncorretAmountExeption.class,()->cashTenPLN.addCash(cashNegativePLN));
+            assertThrows(IncorrectAmountException.class,()->cashTenPLN.addCash(cashNegativePLN));
         }
     }
 
@@ -65,13 +65,13 @@ class CashTest {
         }
         @DisplayName("zero value")
         @Test
-        void isRemoveCashAmountZeroTest() throws IncorrectCurrencyException, IncorretAmountExeption, NoEnoughMoneyException {
+        void isRemoveCashAmountZeroTest() throws IncorrectCurrencyException, IncorrectAmountException, NoEnoughMoneyException {
             cashTenPLN.removeCash(cashZeroPLN);
             assertEquals(BigDecimal.TEN, cashTenPLN.getAmount());
         }
         @DisplayName("some value")
         @Test
-        void isRemoveCashAmountSomeValueTest() throws IncorrectCurrencyException, IncorretAmountExeption, NoEnoughMoneyException {
+        void isRemoveCashAmountSomeValueTest() throws IncorrectCurrencyException, IncorrectAmountException, NoEnoughMoneyException {
             cashThirtyPLN.removeCash(cashTenPLN);
             assertEquals(BigDecimal.valueOf(20), cashThirtyPLN.getAmount());
         }
@@ -83,7 +83,7 @@ class CashTest {
         @DisplayName("throw exception at wrong amount")
         @Test
         void isRemoveCashThrowIncorrectAmountException(){
-            assertThrows(IncorretAmountExeption.class,()->cashTenPLN.removeCash(cashNegativePLN));
+            assertThrows(IncorrectAmountException.class,()->cashTenPLN.removeCash(cashNegativePLN));
         }
         @DisplayName("throw exception at no enough amount")
         @Test

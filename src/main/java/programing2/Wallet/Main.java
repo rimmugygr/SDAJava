@@ -4,7 +4,7 @@ package programing2.Wallet;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import programing2.Wallet.exceptions.IncorrectCurrencyException;
-import programing2.Wallet.exceptions.IncorretAmountExeption;
+import programing2.Wallet.exceptions.IncorrectAmountException;
 import programing2.Wallet.exceptions.NoEnoughMoneyException;
 
 /**
@@ -24,7 +24,7 @@ import programing2.Wallet.exceptions.NoEnoughMoneyException;
 public class Main {
     private static final Logger logger = LogManager.getLogger(Main.class);
 
-    public static void main(String[] args) throws IncorrectCurrencyException, IncorretAmountExeption, NoEnoughMoneyException {
+    public static void main(String[] args) throws IncorrectCurrencyException, IncorrectAmountException, NoEnoughMoneyException {
         Cash smallMoneyPLN = new Cash((double) 543);
         Cash bigMoneyPLN = new Cash((double) 678);
         Cash mediumMoneyPLN =  new Cash((double) 765);

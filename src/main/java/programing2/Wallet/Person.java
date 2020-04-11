@@ -3,7 +3,7 @@ package programing2.Wallet;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import programing2.Wallet.exceptions.IncorrectCurrencyException;
-import programing2.Wallet.exceptions.IncorretAmountExeption;
+import programing2.Wallet.exceptions.IncorrectAmountException;
 import programing2.Wallet.exceptions.NoEnoughMoneyException;
 
 public class Person {
@@ -19,13 +19,13 @@ public class Person {
         this.wallet = new Wallet();
     }
 
-    public static void transaction(Person sourcePerson, Person targetPerson, Cash cashGiven) throws IncorrectCurrencyException, NoEnoughMoneyException, IncorretAmountExeption {
+    public static void transaction(Person sourcePerson, Person targetPerson, Cash cashGiven) throws IncorrectCurrencyException, NoEnoughMoneyException, IncorrectAmountException {
         logger.info(sourcePerson.getFirstName() + " give to " + targetPerson.getFirstName() + " " + cashGiven.toString());
         sourcePerson.wallet.removeCash(cashGiven);
         targetPerson.wallet.addCash(cashGiven);
     }
 
-    public void giveCashTo(Person targetPerson, Cash cashGiven) throws IncorrectCurrencyException, NoEnoughMoneyException, IncorretAmountExeption {
+    public void giveCashTo(Person targetPerson, Cash cashGiven) throws IncorrectCurrencyException, NoEnoughMoneyException, IncorrectAmountException {
         logger.info(this.getFirstName() + " give to " + targetPerson.getFirstName() + " " + cashGiven.toString());
         this.wallet.removeCash(cashGiven);
         targetPerson.wallet.addCash(cashGiven);
@@ -42,7 +42,7 @@ public class Person {
     public void addMoney(Cash cash) {
         try {
             this.wallet.addCash(cash);
-        } catch (IncorrectCurrencyException | IncorretAmountExeption e) {
+        } catch (IncorrectCurrencyException | IncorrectAmountException e) {
             e.printStackTrace();
         } finally {
             logger.info(this.getFirstName() + " get  " + cash.toString());
@@ -54,7 +54,7 @@ public class Person {
             System.out.println(this.wallet.toString()+"1aaaaa");
             this.wallet.removeCash(cash);
             System.out.println(this.wallet.toString()+"2aaaaa");
-        } catch (IncorrectCurrencyException | IncorretAmountExeption e) {
+        } catch (IncorrectCurrencyException | IncorrectAmountException e) {
             e.printStackTrace();
             return false;
         } catch (NoEnoughMoneyException e) {
