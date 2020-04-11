@@ -33,7 +33,7 @@ public class Wallet {
 
     private Cash findCash(Cash cashToFind){
         for (int i = 0; i < moneyList.size(); i++) {
-            if (moneyList.get(i).isSameCurrency(cashToFind)){
+            if (moneyList.get(i).isTheSameCurrency(cashToFind)){
                 return moneyList.get(i);
             }
         }

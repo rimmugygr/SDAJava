@@ -1,7 +1,6 @@
 package programing2.Wallet;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import programing2.Wallet.exceptions.IncorrectCurrencyException;
 import programing2.Wallet.exceptions.IncorretAmountExeption;
 import programing2.Wallet.exceptions.NoEnoughMoneyException;
@@ -9,120 +8,158 @@ import programing2.Wallet.exceptions.NoEnoughMoneyException;
 import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+@DisplayName("Test Cash Class")
 class CashTest {
-    private Cash cash0;
-    private Cash cash1;
-    private Cash cash2;
-    private Cash cash3;
-    private Cash cashTemp;
-    private Cash cashUSD;
-    private Cash cashEURO;
-    private Exception IncorrectCurrencyException;
+    private Cash cashZeroPLN;
+    private Cash cashTenPLN;
+    private Cash cashThirtyPLN;
+    private Cash cashNegativePLN;
+    private Cash cashZeroUSD;
 
-//    @BeforeAll
-//    static void initAll() {
-//        cash0 = new Cash(Currency.PLN);
-//        cash1 = new Cash((double) 10,Currency.PLN);
-//        cash2 = new Cash((double) 20,Currency.PLN);
-//        cash3 = new Cash((double) 30,Currency.PLN);
-//        cashTemp = new Cash(Currency.PLN);
-//    }
-//    @BeforeEach
-//    void initEach() {
-//        cash0 = new Cash(BigDecimal.ZERO , Currency.PLN);
-//        cash1 = new Cash(BigDecimal.TEN,Currency.PLN);
-//        cash2 = new Cash((double) 20,Currency.PLN);
-//        cash3 = new Cash((double) 30,Currency.PLN);
-//        cashTemp = new Cash(Currency.PLN);
-//        cashUSD = new Cash(BigDecimal.ZERO, Currency.USD);
-//        cashEURO = new Cash(BigDecimal.valueOf(10),Currency.EURO);
-//    }
-
-    @Test
-    void isAddCashAmountTest() throws IncorrectCurrencyException, IncorretAmountExeption {
-        cash0 = new Cash(BigDecimal.ZERO, Currency.PLN);
-        cashTemp = new Cash(BigDecimal.ZERO, Currency.PLN);
-        cash0.addCash(cashTemp);
-        assertEquals(BigDecimal.ZERO, cash0.getAmount());
-
-        cash1 = new Cash(BigDecimal.ZERO, Currency.PLN);
-        cashTemp = new Cash(BigDecimal.TEN, Currency.PLN);
-        cash1.addCash(cashTemp);
-        assertEquals(BigDecimal.TEN,cash1.getAmount());
-
-        cash2 = new Cash((double) 50, Currency.USD);
-        cashTemp = new Cash((double) 100, Currency.USD);
-        cash2.addCash(cashTemp);
-        assertEquals(BigDecimal.valueOf(150),cash2.getAmount());
-    }
-
-    @Test
-    void isAddCashExceptionTest()  {
-        cash0 = new Cash(BigDecimal.ZERO, Currency.PLN);
-        cashTemp = new Cash(BigDecimal.ZERO, Currency.USD);
-        assertThrows(IncorrectCurrencyException, cash0.addCash(cashTemp));
-
-
-        cash1 = new Cash(BigDecimal.ZERO, Currency.PLN);
-        cashTemp = new Cash(BigDecimal.TEN, Currency.PLN);
-        cash1.addCash(cashTemp);
-        assertEquals(BigDecimal.TEN,cash1.getAmount());
-
-        cash2 = new Cash((double) 50, Currency.USD);
-        cashTemp = new Cash((double) 100, Currency.USD);
-        cash2.addCash(cashTemp);
-        assertEquals(BigDecimal.valueOf(150),cash2.getAmount());
+    @DisplayName("Adding Cash //addCash method")
+    @Nested
+    class AddCash{
+        @BeforeEach
+        void initEach() {
+            cashZeroPLN = new Cash(BigDecimal.ZERO , Currency.PLN);
+            cashTenPLN = new Cash(BigDecimal.TEN,Currency.PLN);
+            cashThirtyPLN = new Cash((double) 30,Currency.PLN);
+            cashNegativePLN = new Cash((double) -100, Currency.PLN);
+            cashZeroUSD = new Cash(BigDecimal.ZERO, Currency.USD);
+        }
+        @DisplayName("add zero value")
+        @Test
+        void isAddCashAmountZeroTest() throws IncorrectCurrencyException, IncorretAmountExeption {
+            cashTenPLN.addCash(cashZeroPLN);
+            assertEquals(BigDecimal.TEN, cashTenPLN.getAmount());
+        }
+        @DisplayName("add some value")
+        @Test
+        void isAddCashAmountSomeValueTest() throws IncorrectCurrencyException, IncorretAmountExeption {
+            cashThirtyPLN.addCash(cashTenPLN);
+            assertEquals(BigDecimal.valueOf(40), cashThirtyPLN.getAmount());
+        }
+        @DisplayName("throw exception at wrong currency")
+        @Test
+        void isAddCashThrowIncorrectCurrencyException(){
+            assertThrows(IncorrectCurrencyException.class,()->cashZeroUSD.addCash(cashTenPLN));
+        }
+        @DisplayName("throw exception at wrong amount")
+        @Test
+        void isAddCashThrowIncorrectAmountException(){
+            assertThrows(IncorretAmountExeption.class,()->cashTenPLN.addCash(cashNegativePLN));
+        }
     }
 
 
-
-
-    @Test
-    void isRemoveCash() throws IncorrectCurrencyException, NoEnoughMoneyException, IncorretAmountExeption {
-        cash0.removeCash(cashTemp);
-        assertEquals(cash0.getAmount(),cash0.getAmount());
-        cash3.removeCash(cash2);
-        assertEquals(cash3.getAmount(),cash1.getAmount());
-        cash2.removeCash(cash1);
-        assertEquals(cash2.getAmount(),cash1.getAmount());
+    @DisplayName("Remove Cash //removeCash method")
+    @Nested
+    class RemoveCash{
+        @BeforeEach
+        void initEach() {
+            cashZeroPLN = new Cash(BigDecimal.ZERO , Currency.PLN);
+            cashTenPLN = new Cash(BigDecimal.TEN,Currency.PLN);
+            cashThirtyPLN = new Cash((double) 30,Currency.PLN);
+            cashNegativePLN = new Cash((double) -100, Currency.PLN);
+            cashZeroUSD = new Cash(BigDecimal.ZERO, Currency.USD);
+        }
+        @DisplayName("zero value")
+        @Test
+        void isRemoveCashAmountZeroTest() throws IncorrectCurrencyException, IncorretAmountExeption, NoEnoughMoneyException {
+            cashTenPLN.removeCash(cashZeroPLN);
+            assertEquals(BigDecimal.TEN, cashTenPLN.getAmount());
+        }
+        @DisplayName("some value")
+        @Test
+        void isRemoveCashAmountSomeValueTest() throws IncorrectCurrencyException, IncorretAmountExeption, NoEnoughMoneyException {
+            cashThirtyPLN.removeCash(cashTenPLN);
+            assertEquals(BigDecimal.valueOf(20), cashThirtyPLN.getAmount());
+        }
+        @DisplayName("throw exception at wrong currency")
+        @Test
+        void isRemoveCashThrowIncorrectCurrencyException(){
+            assertThrows(IncorrectCurrencyException.class,()->cashTenPLN.removeCash(cashZeroUSD));
+        }
+        @DisplayName("throw exception at wrong amount")
+        @Test
+        void isRemoveCashThrowIncorrectAmountException(){
+            assertThrows(IncorretAmountExeption.class,()->cashTenPLN.removeCash(cashNegativePLN));
+        }
+        @DisplayName("throw exception at no enough amount")
+        @Test
+        void isRemoveCashThrowNoEnoughMoneyException(){
+            assertThrows(NoEnoughMoneyException.class,()->cashTenPLN.removeCash(cashThirtyPLN));
+        }
     }
 
-    @Test
-    void isCheckCurrency() {
-        assertTrue(cashTemp.isSameCurrency(cash0));
-        assertTrue(cashUSD.isSameCurrency(new Cash(Currency.USD)));
 
-        assertFalse(cashUSD.isSameCurrency(cashEURO));
-        assertFalse(cashEURO.isSameCurrency(cashTemp));
+    @DisplayName("Checking that is the same currency //isTheSameCurrency method")
+    @Nested
+    class CheckCurrency{
+        @BeforeEach
+        void initEach() {
+            cashZeroPLN = new Cash(BigDecimal.ZERO , Currency.PLN);
+            cashTenPLN = new Cash(BigDecimal.TEN,Currency.PLN);
+            cashZeroUSD = new Cash(BigDecimal.ZERO, Currency.USD);
+        }
+        @DisplayName("for true")
+        @Test
+        void checkCurrencyForTrue() {
+            assertTrue(cashTenPLN.isTheSameCurrency(cashZeroPLN));
+        }
+        @DisplayName("for false")
+        @Test
+        void checkCurrencyForFalse() {
+            assertFalse(cashZeroUSD.isTheSameCurrency(cashTenPLN));
+        }
     }
 
 
-    @Test
-    void isEnoughAmount() {
-        assertTrue(cash0.isEnoughAmount(cashTemp));
-        assertTrue(cash1.isEnoughAmount(cashTemp));
-        assertTrue(cash2.isEnoughAmount(cash1));
-        assertTrue(cash2.isEnoughAmount(cash2));
 
-        assertFalse(cash1.isEnoughAmount(cash3));
-        assertFalse(cash0.isEnoughAmount(cash1));
+    @DisplayName("Checking that is EnoughAmount //isEnoughAmount method")
+    @Nested
+    class EnoughAmount {
+        @BeforeEach
+        void initEach() {
+            cashZeroPLN = new Cash(BigDecimal.ZERO , Currency.PLN);
+            cashTenPLN = new Cash(BigDecimal.TEN,Currency.PLN);
+            cashThirtyPLN = new Cash((double) 30,Currency.PLN);
+        }
+        @DisplayName("for zero amount")
+        @Test
+        void isEnoughAmountTrueForZero() {
+            assertTrue(cashTenPLN.isEnoughAmount(cashTenPLN));
+        }
+        @DisplayName("with smallest amount")
+        @Test
+        void isEnoughAmountTrueForSomeValue() {
+            assertTrue(cashThirtyPLN.isEnoughAmount(cashTenPLN));
+        }
+        @DisplayName("with bigger amount")
+        @Test
+        void isEnoughAmountFalse() {
+            assertFalse(cashTenPLN.isEnoughAmount(cashThirtyPLN));
+        }
     }
 
-    @Test
-    void isZeroAmount() {
-        assertTrue(cash0.isZeroAmount());
-        assertTrue(cashTemp.isZeroAmount());
-
-        assertFalse(cash1.isZeroAmount());
-        assertFalse(cashEURO.isZeroAmount());
+    @DisplayName("Checking that is zero in amount //isZeroAmount method")
+    @Nested
+    class ZeroAmount{
+        @BeforeEach
+        void initEach() {
+            cashZeroPLN = new Cash(BigDecimal.ZERO , Currency.PLN);
+            cashTenPLN = new Cash(BigDecimal.TEN,Currency.PLN);
+        }
+        @DisplayName("for zero value")
+        @Test
+        void isZeroAmountTrue() {
+            assertTrue(cashZeroPLN.isZeroAmount());
+        }
+        @DisplayName("for positive value")
+        @Test
+        void isZeroAmountFalse() {
+            assertFalse(cashTenPLN.isZeroAmount());
+        }
     }
 
-    @Test
-    void setAmountToZero() {
-        cash0.setAmountToZero();
-        assertEquals(cash0.getAmount(),cashTemp.getAmount());
-        cash3.setAmountToZero();
-        assertEquals(cash3.getAmount(),cashTemp.getAmount());
-    }
 }

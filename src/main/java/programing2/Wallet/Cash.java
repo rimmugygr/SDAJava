@@ -47,7 +47,7 @@ public class Cash {
         }
     }
 
-    public boolean isSameCurrency(Cash cash) {
+    public boolean isTheSameCurrency(Cash cash) {
         return this.currency.equals(cash.getCurrency());
     }
 
@@ -63,10 +63,6 @@ public class Cash {
         return this.amount.equals(BigDecimal.ZERO);
     }
 
-    public void setAmountToZero(){
-        this.amount=BigDecimal.ZERO;
-    }
-
     public BigDecimal getAmount() {
         return amount;
     }
@@ -75,7 +71,7 @@ public class Cash {
         if (cash.getAmount().compareTo(BigDecimal.ZERO)<0) {
             throw new  IncorretAmountExeption();
         }
-        if (!isSameCurrency(cash)) {
+        if (!isTheSameCurrency(cash)) {
             throw new IncorrectCurrencyException();
         }
         return true;
