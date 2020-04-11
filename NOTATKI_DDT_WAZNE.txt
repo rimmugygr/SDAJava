@@ -34,7 +34,10 @@ Baby Step - technika ma³ymi krokami
 
 Composition over inheritance
 
-BDD Behavior Dypoly Development
+BDD Behavior Driver Development
+Given <- Arrange
+When <- Act
+Then <- Assert
 
 final dla class i collection przy deklaracji ---- nie mo¿na wtedy new u¿yæ poza deklaracj¹, ale mo¿na updetowaæ
 final dla typów prostych --- nic nie zmienisz
