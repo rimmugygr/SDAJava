@@ -6,6 +6,7 @@ import programing2.Wallet.exceptions.IncorrectAmountException;
 import programing2.Wallet.exceptions.NoEnoughMoneyException;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 /**
  * Class represent money
@@ -49,7 +50,7 @@ public class Cash {
      * @throws IncorrectCurrencyException when param have different filed currency
      * @throws IncorrectAmountException when param have negative value of field amount
      */
-    public void addCash(Cash cashToAdd) throws IncorrectCurrencyException, IncorrectAmountException {
+    public void addMoney(Cash cashToAdd) throws IncorrectCurrencyException, IncorrectAmountException {
         if (isValidatedCash(cashToAdd)) {
             this.amount = this.amount.add(cashToAdd.getAmount());
         }
@@ -62,7 +63,7 @@ public class Cash {
      * @throws IncorrectAmountException when param have negative value of field amount
      * @throws NoEnoughMoneyException when param have higher value of field amount
      */
-    public boolean removeCash(Cash cashToRemove) throws IncorrectCurrencyException, NoEnoughMoneyException, IncorrectAmountException {
+    public boolean removeMoney(Cash cashToRemove) throws IncorrectCurrencyException, NoEnoughMoneyException, IncorrectAmountException {
         if (isEnoughAmount(cashToRemove) && isValidatedCash(cashToRemove)) {
             this.amount = this.amount.add(cashToRemove.getAmount().negate());
             return true;
@@ -104,6 +105,20 @@ public class Cash {
             throw new IncorrectCurrencyException();
         }
         return true;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cash cash = (Cash) o;
+        return Objects.equals(amount, cash.amount) &&
+                currency == cash.currency;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(amount, currency);
     }
 
     @Override

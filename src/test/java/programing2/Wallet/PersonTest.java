@@ -13,32 +13,29 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PersonTest {
+    Person personA = new Person("aaa", "aaa");
+    Person personB = new Person("bbb", "bbb");
 
-    @BeforeAll
-    void init() {
-        Person personA = new Person("aaa", "aaa");
-        Person personB = new Person("bbb", "bbb");
-    }
 
-    @BeforeEach
-    void setUp() {
-
-    }
-
-    @ParameterizedTest
-    @MethodSource("persons")
-    public void iSAddingCash(LocalDate localDate, LocalDate expected) {
-
-        assertEquals(expected, WorkDayHelper.getLastWorkDay(localDate));
-    }
-
-    private static Stream<Arguments> persons() {
-        return Stream.of(
-                Arguments.of(LocalDate.of(2020, 2,29),LocalDate.of(2020, 2,28)),
-                Arguments.of(LocalDate.of(2020, 2,1), LocalDate.of(2020, 2,28)),
-                Arguments.of(LocalDate.of(2020, 2,5), LocalDate.of(2020, 2,28)),
-                Arguments.of(LocalDate.of(2020, 3,1), LocalDate.of(2020, 3,31)),
-                Arguments.of(LocalDate.of(2020, 3,31), LocalDate.of(2020, 3,31))
-        );
-    }
+//    @BeforeEach
+//    void init() {
+//
+//    }
+//
+//    @ParameterizedTest
+//    @MethodSource("persons")
+//    public void iSAddingCash(LocalDate localDate, LocalDate expected) {
+//
+//        assertEquals(expected, WorkDayHelper.getLastWorkDay(localDate));
+//    }
+//
+//    private static Stream<Arguments> persons() {
+//        return Stream.of(
+//                Arguments.of(LocalDate.of(2020, 2,29),LocalDate.of(2020, 2,28)),
+//                Arguments.of(LocalDate.of(2020, 2,1), LocalDate.of(2020, 2,28)),
+//                Arguments.of(LocalDate.of(2020, 2,5), LocalDate.of(2020, 2,28)),
+//                Arguments.of(LocalDate.of(2020, 3,1), LocalDate.of(2020, 3,31)),
+//                Arguments.of(LocalDate.of(2020, 3,31), LocalDate.of(2020, 3,31))
+//        );
+//    }
 }

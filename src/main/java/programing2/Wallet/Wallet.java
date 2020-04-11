@@ -15,20 +15,47 @@ public class Wallet {
         this.moneyList = new ArrayList<>();
     }
 
-    public void addCash(Cash cashToAdd) throws IncorrectCurrencyException, IncorrectAmountException {
+    public Wallet() {
+    }
+
+    public Wallet(Cash money) {
+        this.moneyList.add(money);
+    }
+
+    public Wallet(List<Cash> moneyList) {
+        this.moneyList = moneyList;
+    }
+
+    public List<Cash> getMoneyList() {
+        return moneyList;
+    }
+
+    public boolean addCash(Cash cashToAdd) {
         Cash cashInWallet =  findCash(cashToAdd);
-        cashInWallet.addCash(cashToAdd);
+        try {
+            cashInWallet.addMoney(cashToAdd);
+        } catch (IncorrectCurrencyException | IncorrectAmountException e) {
+            return false;
+        }
+        return true;
+
+
     }
 
 
-    public Cash removeCash(Cash cashToRemove) throws IncorrectCurrencyException, NoEnoughMoneyException, IncorrectAmountException {
+    public boolean removeCash(Cash cashToRemove) {
         Cash cashInWallet =  findCash(cashToRemove);
         if(cashInWallet.isEnoughAmount(cashToRemove)){
-            cashInWallet.removeCash(cashToRemove);
-            return new Cash(BigDecimal.ZERO,cashToRemove.getCurrency());
-        } else {
-            return new Cash(cashInWallet.getAmount(),cashInWallet.getCurrency());
+
+            try {
+                cashInWallet.removeMoney(cashToRemove);
+            } catch (IncorrectCurrencyException | NoEnoughMoneyException | IncorrectAmountException e) {
+                return false;
+            }
+            return true;
         }
+        System.out.println("aaaa");
+        return false;
     }
 
     private Cash findCash(Cash cashToFind){
