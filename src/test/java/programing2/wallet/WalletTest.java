@@ -1,9 +1,9 @@
-package programing2.Wallet;
+package programing2.wallet;
 
 
 import org.junit.jupiter.api.*;
-import programing2.Wallet.exceptions.IncorrectAmountException;
-import programing2.Wallet.exceptions.IncorrectCurrencyException;
+import programing2.wallet.exceptions.IncorrectAmountException;
+import programing2.wallet.exceptions.IncorrectCurrencyException;
 import java.math.BigDecimal;
 import java.time.Duration;
 

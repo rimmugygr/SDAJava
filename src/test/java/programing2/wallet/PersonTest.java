@@ -1,13 +1,11 @@
-package programing2.Wallet;
+package programing2.wallet;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import tdd.WorkDayHelper;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -106,7 +104,7 @@ class PersonTest {
         void isMovingMoney() {
             System.out.println(cashTeenEuro);
             assertAll(
-                    () -> assertTrue(Person.transaction(personA,personB,cashTeenEuro)),
+                    () -> assertTrue(Person.transactionMoney(personA,personB,cashTeenEuro)),
                     () -> assertEquals(new Cash(BigDecimal.TEN, Currency.EURO), personA.getWallet().getMoneyList().get(1)),
                     () -> assertEquals(new Cash(BigDecimal.TEN, Currency.EURO), personB.getWallet().getMoneyList().get(1)),
                     () -> assertEquals(2, personB.getWallet().getMoneyList().size()),
@@ -119,7 +117,7 @@ class PersonTest {
         void isNotMovingMoneyWhenNotEnough() {
             System.out.println(cashTeenEuro);
             assertAll(
-                    () -> assertFalse(Person.transaction(personB,personA,cashTeenEuro)),
+                    () -> assertFalse(Person.transactionMoney(personB,personA,cashTeenEuro)),
                     () -> assertEquals(new Cash(BigDecimal.valueOf(20), Currency.EURO), personA.getWallet().getMoneyList().get(1)),
                     () -> assertEquals(new Cash(BigDecimal.ZERO, Currency.EURO), personB.getWallet().getMoneyList().get(1)),
                     () -> assertEquals(2, personB.getWallet().getMoneyList().size()),

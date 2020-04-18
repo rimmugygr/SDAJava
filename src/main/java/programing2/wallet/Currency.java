@@ -1,4 +1,4 @@
-package programing2.Wallet;
+package programing2.wallet;
 
 public enum Currency {
     USD,

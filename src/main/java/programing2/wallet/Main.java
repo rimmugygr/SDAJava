@@ -1,11 +1,13 @@
-package programing2.Wallet;
+package programing2.wallet;
 
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import programing2.Wallet.exceptions.IncorrectCurrencyException;
-import programing2.Wallet.exceptions.IncorrectAmountException;
-import programing2.Wallet.exceptions.NoEnoughMoneyException;
+import programing2.wallet.exceptions.IncorrectCurrencyException;
+import programing2.wallet.exceptions.IncorrectAmountException;
+import programing2.wallet.exceptions.NoEnoughMoneyException;
+
+import java.util.List;
 
 /**
  * Stwórz model: Osoba, Portfel, Pieniadze
@@ -34,23 +36,29 @@ public class Main {
 
         Person adolf = new Person("Adolf","Kowalski");
         adolf.addMoney(mediumMoneyPLN);
-        adolf.addMoney(smallMoneyEURO);
+        adolf.addMoney(mediumMoneyEURO);
+        adolf.addItem("Siekiera");
+        adolf.addItemToBuy(new OfferItem("Wiadro", List.of(smallMoneyEURO)));
+
+        Person jozef = new Person("Jozef","Kowalski");
+        jozef.addMoney(bigMoneyPLN);
+        jozef.addMoney(mediumMoneyEURO);
+        jozef.addItem("Malpa");
+        jozef.addItem("Wiadro");
+        jozef.addItemToSell(new OfferItem("Wiadro", List.of(smallMoneyEURO)));
         logger.info(adolf.toString());
-        logger.info(adolf.removeMoney(mediumMoneyPLN));
-        logger.info(adolf.toString());
-        logger.info(adolf.removeMoney(mediumMoneyPLN));
-        logger.info(adolf.toString());
+        logger.info(jozef.toString());
 
 
-//        Person jozef = new Person("Jozef","Kowalski");
-//        jozef.addMoney(bigMoneyPLN);
-//        jozef.addMoney(mediumMoneyEURO);
+        System.out.println("Transaction is success: " + Person.transactionItem(adolf, jozef));
+        logger.info(adolf.toString());
+        logger.info(jozef.toString());
 //
 //        logger.info(adolf.toString());
 //        logger.info(jozef.toString());
 //
 //        //transaction
-//        Person.transaction(jozef,adolf,smallMoneyPLN);
+//        Person.transactionMoney(jozef,adolf,smallMoneyPLN);
 //        logger.info(adolf.toString());
 //        logger.info(jozef.toString());
 //

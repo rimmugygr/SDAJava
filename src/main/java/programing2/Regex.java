@@ -2,7 +2,6 @@ package programing2;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import programing2.Wallet.Main;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

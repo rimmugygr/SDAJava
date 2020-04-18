@@ -1,4 +1,4 @@
-package programing2.Wallet.exceptions;
+package programing2.wallet.exceptions;
 
 public class IncorrectAmountException extends Throwable {
 }
