@@ -2,15 +2,10 @@ package programing2.Wallet;
 
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 import programing2.Wallet.exceptions.IncorrectAmountException;
 import programing2.Wallet.exceptions.IncorrectCurrencyException;
-
 import java.math.BigDecimal;
 import java.time.Duration;
-import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 

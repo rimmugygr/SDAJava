@@ -16,6 +16,12 @@ public class Person {
         this.wallet = new Wallet();
     }
 
+    public Person(String firstName, String lastName, Wallet wallet) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.wallet = wallet;
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -25,8 +31,9 @@ public class Person {
     }
 
     public static boolean transaction(Person sourcePerson, Person targetPerson, Cash cashGiven) {
-        if (sourcePerson.wallet.removeCash(cashGiven)) {
-            targetPerson.wallet.addCash(cashGiven);
+        boolean isRemovedFromSourcePerson = sourcePerson.removeMoney(cashGiven);
+        if (isRemovedFromSourcePerson) {
+            targetPerson.addMoney(cashGiven);
             logger.info(sourcePerson.getFirstName() + " give to " + targetPerson.getFirstName() + " " + cashGiven.toString());
             return true;
         } else {
@@ -61,6 +68,15 @@ public class Person {
             logger.info(this.getFirstName() + " dont have " + cash.toString());
             return false;
         }
+    }
+
+
+    public Wallet getWallet() {
+        return wallet;
+    }
+
+    public void setWallet(Wallet wallet) {
+        this.wallet = wallet;
     }
 
     @Override

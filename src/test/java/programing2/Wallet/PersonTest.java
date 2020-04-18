@@ -1,41 +1,131 @@
 package programing2.Wallet;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import tdd.WorkDayHelper;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@DisplayName("Test of Person class")
+@Tag("All")
 class PersonTest {
-    Person personA = new Person("aaa", "aaa");
-    Person personB = new Person("bbb", "bbb");
+    Person personA;
+    Person personB;
+
+    Cash cashZeroPln;
+    Cash cash20Pln;
+    Cash cash5Pln;
+    Cash cashTeenEuro;
+    Cash cashMinusEuro;
+
+    @DisplayName("is adding money")
+    @ParameterizedTest
+    @MethodSource("personIsAddMoney")
+    public void iSAddingCash(boolean expected, Person target, Cash cash) {
+        assertEquals(expected, target.addMoney(cash));
+    }
+
+    private static Stream<Arguments> personIsAddMoney() {
+        Person personA = new Person("aaa", "aaa");
+        Cash cashZeroPln = new Cash(BigDecimal.ZERO,Currency.PLN);
+        Cash cashTeenEuro = new Cash(BigDecimal.TEN,Currency.EURO);
+        Cash cashMinusEuro = new Cash(BigDecimal.TEN.negate(),Currency.EURO);
+
+        return Stream.of(
+                Arguments.of(true, personA, cashZeroPln ),
+                Arguments.of(true, personA, cashTeenEuro),
+                Arguments.of(false, personA, cashMinusEuro)
+        );
+    }
+
+    @DisplayName("is removing money")
+    @ParameterizedTest
+    @MethodSource("personIsRemoveMoney")
+    public void iSRemovedCash(boolean expected, Person target, Cash cash) {
+        assertEquals(expected, target.removeMoney(cash));
+    }
+
+    private static Stream<Arguments> personIsRemoveMoney() {
+        List<Cash> cashList = new ArrayList<>();
+        cashList.add(new Cash(BigDecimal.TEN,Currency.PLN));
+        cashList.add(new Cash(BigDecimal.TEN,Currency.EURO));
+        Wallet wallet = new Wallet(cashList);
+        Person personA = new Person("aaa", "aaa", wallet);
+
+        Cash cashZeroPln = new Cash(BigDecimal.ZERO,Currency.PLN);
+        Cash cash20Pln = new Cash(BigDecimal.valueOf(20),Currency.PLN);
+        Cash cash5Pln = new Cash(BigDecimal.valueOf(5),Currency.PLN);
+        Cash cashTeenEuro = new Cash(BigDecimal.TEN,Currency.EURO);
+        Cash cashMinusEuro = new Cash(BigDecimal.TEN.negate(),Currency.EURO);
+
+        return Stream.of(
+                Arguments.of(true, personA, cashZeroPln),
+                Arguments.of(true, personA, cashTeenEuro),
+                Arguments.of(false, personA, cashMinusEuro),
+                Arguments.of(false, personA, cash20Pln),
+                Arguments.of(true, personA, cash5Pln)
+        );
+    }
 
 
-//    @BeforeEach
-//    void init() {
-//
-//    }
-//
-//    @ParameterizedTest
-//    @MethodSource("persons")
-//    public void iSAddingCash(LocalDate localDate, LocalDate expected) {
-//
-//        assertEquals(expected, WorkDayHelper.getLastWorkDay(localDate));
-//    }
-//
-//    private static Stream<Arguments> persons() {
-//        return Stream.of(
-//                Arguments.of(LocalDate.of(2020, 2,29),LocalDate.of(2020, 2,28)),
-//                Arguments.of(LocalDate.of(2020, 2,1), LocalDate.of(2020, 2,28)),
-//                Arguments.of(LocalDate.of(2020, 2,5), LocalDate.of(2020, 2,28)),
-//                Arguments.of(LocalDate.of(2020, 3,1), LocalDate.of(2020, 3,31)),
-//                Arguments.of(LocalDate.of(2020, 3,31), LocalDate.of(2020, 3,31))
-//        );
-//    }
+
+
+    @DisplayName("Is transaction work")
+    @Nested
+    class TransactionMoney {
+        @BeforeEach
+        void init() {
+            List<Cash> cashListA = new ArrayList<>();
+            cashListA.add(new Cash(BigDecimal.TEN,Currency.PLN));
+            cashListA.add(new Cash(BigDecimal.valueOf(20),Currency.EURO));
+            Wallet walletA = new Wallet(cashListA);
+            personA = new Person("aaa", "aaa", walletA);
+
+            List<Cash> cashListB = new ArrayList<>();
+            cashListB.add(new Cash(BigDecimal.ZERO,Currency.PLN));
+            Wallet walletB = new Wallet(cashListB);
+            personB = new Person("bbb", "bbb", walletB);
+
+            cashZeroPln = new Cash(BigDecimal.ZERO,Currency.PLN);
+            cash20Pln = new Cash(BigDecimal.valueOf(20),Currency.PLN);
+            cash5Pln = new Cash(BigDecimal.valueOf(5),Currency.PLN);
+            cashTeenEuro = new Cash(BigDecimal.TEN,Currency.EURO);
+            cashMinusEuro = new Cash(BigDecimal.TEN.negate(),Currency.EURO);
+        }
+
+        @DisplayName("should transfer money")
+        @Test
+        void isMovingMoney() {
+            System.out.println(cashTeenEuro);
+            assertAll(
+                    () -> assertTrue(Person.transaction(personA,personB,cashTeenEuro)),
+                    () -> assertEquals(new Cash(BigDecimal.TEN, Currency.EURO), personA.getWallet().getMoneyList().get(1)),
+                    () -> assertEquals(new Cash(BigDecimal.TEN, Currency.EURO), personB.getWallet().getMoneyList().get(1)),
+                    () -> assertEquals(2, personB.getWallet().getMoneyList().size()),
+                    () -> assertEquals(2, personA.getWallet().getMoneyList().size())
+            );
+        }
+
+        @DisplayName("should not transfer money when source have not enough money")
+        @Test
+        void isNotMovingMoneyWhenNotEnough() {
+            System.out.println(cashTeenEuro);
+            assertAll(
+                    () -> assertFalse(Person.transaction(personB,personA,cashTeenEuro)),
+                    () -> assertEquals(new Cash(BigDecimal.valueOf(20), Currency.EURO), personA.getWallet().getMoneyList().get(1)),
+                    () -> assertEquals(new Cash(BigDecimal.ZERO, Currency.EURO), personB.getWallet().getMoneyList().get(1)),
+                    () -> assertEquals(2, personB.getWallet().getMoneyList().size()),
+                    () -> assertEquals(2, personA.getWallet().getMoneyList().size())
+            );
+        }
+
+    }
 }
