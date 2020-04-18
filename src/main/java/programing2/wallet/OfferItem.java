@@ -42,9 +42,9 @@ public class OfferItem {
         return null;
     }
 
-    private static boolean checkIsEnoughCashInList(OfferItem offerSell, Cash cash) {
-        for (int i = 0; i < offerSell.getMoneyList().size(); i++) {
-            Cash tempCash = offerSell.getMoneyList().get(i);
+    private static boolean checkIsEnoughCashInList(OfferItem offer, Cash cash) {
+        for (int i = 0; i < offer.getMoneyList().size(); i++) {
+            Cash tempCash = offer.getMoneyList().get(i);
             if(tempCash.isTheSameCurrency(cash) && tempCash.isEnoughAmount((cash))) return true;
         }
         return false;
