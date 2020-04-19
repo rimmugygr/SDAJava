@@ -1,9 +1,6 @@
 package programing2.wallet;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class OfferItem {
     private String name;
@@ -14,22 +11,26 @@ public class OfferItem {
         this.moneyList = moneyList;
     }
 
-    public static Map<String, Cash> getSuccesedOfferOnItem(Set<String> itemsName, Set<OfferItem> itemsToBuy, Set<OfferItem> itemsToSell) {
+    // return cash for item in favor for selling OfferItem first match by currency of buying OfferItem
+    public static Map<String, Cash> getSucceedOfferOnItem(Set<String> items, Set<OfferItem> itemsToBuy, Set<OfferItem> itemsToSell) {
         Map<String,Cash> resultTransaction = new HashMap<>();
 
-        for (String nameItem : itemsName) {
+        for (String item : items) {
+
             // collections with offers each side
             OfferItem offerBuy = itemsToBuy.stream()
-                    .filter(x -> x.getName().equals(nameItem))
-                    .findFirst().get();
+                    .filter(x -> x.getName().equals(item))
+                    .findFirst().orElse(null);
             OfferItem offerSell = itemsToSell.stream()
-                    .filter(x -> x.getName().equals(nameItem))
-                    .findFirst().get();
+                    .filter(x -> x.getName().equals(item))
+                    .findFirst().orElse(null);
+            // if item is not in OfferItem
+            if (offerBuy==null||offerSell==null) continue;
 
             // check is acceptable offer for this item
             Cash result = OfferItem.withCashIsAcceptableOffer(offerBuy,offerSell);
             if (result != null) {
-                resultTransaction.put(nameItem,result);
+                resultTransaction.put(item,result);
             }
         }
         return resultTransaction;
@@ -45,7 +46,7 @@ public class OfferItem {
     private static boolean checkIsEnoughCashInList(OfferItem offer, Cash cash) {
         for (int i = 0; i < offer.getMoneyList().size(); i++) {
             Cash tempCash = offer.getMoneyList().get(i);
-            if(tempCash.isTheSameCurrency(cash) && tempCash.isEnoughAmount((cash))) return true;
+            if(tempCash.isTheSameCurrency(cash) && cash.isEnoughAmount((tempCash))) return true;
         }
         return false;
     }
@@ -66,10 +67,22 @@ public class OfferItem {
         this.moneyList = moneyList;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OfferItem offerItem = (OfferItem) o;
+        return Objects.equals(name, offerItem.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
 
     @Override
     public String toString() {
-        return "name: " + name +
-                " moneyList=" + moneyList ;
+        return " " + name +
+                " for " + moneyList + ' ';
     }
 }

@@ -67,7 +67,7 @@ public class Person {
         if (itemsName.isEmpty()) return false;
 
         // check offer
-        Map<String, Cash> resultTransaction = OfferItem.getSuccesedOfferOnItem(itemsName, itemsToBuy, itemsToSell);
+        Map<String, Cash> resultTransaction = OfferItem.getSucceedOfferOnItem(itemsName, itemsToBuy, itemsToSell);
         // if person have not enough money to give
         if (resultTransaction.isEmpty())  return false;
 

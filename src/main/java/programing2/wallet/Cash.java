@@ -123,7 +123,7 @@ public class Cash {
 
     @Override
     public String toString() {
-        return " "+ amount +
-                " " + currency;
+        return ""+ amount +
+                " " + currency + "";
     }
 }

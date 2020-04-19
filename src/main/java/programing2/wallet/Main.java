@@ -39,6 +39,7 @@ public class Main {
         adolf.addMoney(mediumMoneyEURO);
         adolf.addItem("Siekiera");
         adolf.addItemToBuy(new OfferItem("Wiadro", List.of(smallMoneyEURO)));
+        adolf.addItemToBuy(new OfferItem("Wiadro2", List.of(smallMoneyEURO)));
 
         Person jozef = new Person("Jozef","Kowalski");
         jozef.addMoney(bigMoneyPLN);
