@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("Test of Cash class")
-@Tag("All")
+@Tag("Wallet")
 class CashTest {
     private Cash cashZeroPLN;
     private Cash cashTenPLN;
@@ -79,7 +79,7 @@ class CashTest {
         @DisplayName("throw exception at wrong currency")
         @Test
         void isRemoveCashThrowIncorrectCurrencyException(){
-            assertThrows(IncorrectCurrencyException.class,()->cashTenPLN.removeMoney(cashZeroUSD));
+            assertThrows(NoEnoughMoneyException.class,()->cashTenPLN.removeMoney(cashZeroUSD));
         }
         @DisplayName("throw exception at wrong amount")
         @Test
@@ -129,17 +129,17 @@ class CashTest {
         @DisplayName("for zero amount")
         @Test
         void isEnoughAmountTrueForZero() {
-            assertTrue(cashTenPLN.isEnoughAmount(cashTenPLN));
+            assertTrue(cashTenPLN.isEnoughAmountAndCurrency(cashTenPLN));
         }
         @DisplayName("with smallest amount")
         @Test
         void isEnoughAmountTrueForSomeValue() {
-            assertTrue(cashThirtyPLN.isEnoughAmount(cashTenPLN));
+            assertTrue(cashThirtyPLN.isEnoughAmountAndCurrency(cashTenPLN));
         }
         @DisplayName("with bigger amount")
         @Test
         void isEnoughAmountFalse() {
-            assertFalse(cashTenPLN.isEnoughAmount(cashThirtyPLN));
+            assertFalse(cashTenPLN.isEnoughAmountAndCurrency(cashThirtyPLN));
         }
     }
 

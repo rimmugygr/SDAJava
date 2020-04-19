@@ -10,7 +10,7 @@ import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("Test of OfferItem class")
-@Tag("All")
+@Tag("Wallet")
 class OfferItemTest {
     Set<OfferItem> offerItemsBuy;
     Set<OfferItem> offerItemsSell;

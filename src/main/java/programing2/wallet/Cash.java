@@ -64,7 +64,7 @@ public class Cash {
      * @throws NoEnoughMoneyException when param have higher value of field amount
      */
     public boolean removeMoney(Cash cashToRemove) throws IncorrectCurrencyException, NoEnoughMoneyException, IncorrectAmountException {
-        if (isEnoughAmount(cashToRemove) && isValidatedCash(cashToRemove)) {
+        if (isEnoughAmountAndCurrency(cashToRemove) && isValidatedCash(cashToRemove)) {
             this.amount = this.amount.add(cashToRemove.getAmount().negate());
             return true;
         } else {
@@ -86,8 +86,10 @@ public class Cash {
      * @param cash
      * @return true if value amount is bigger than value amount of param or the same other false
      */
-    public boolean isEnoughAmount(Cash cash){
-        return this.amount.compareTo(cash.amount)>=0;
+    public boolean isEnoughAmountAndCurrency(Cash cash){
+        if(isTheSameCurrency(cash)) {
+            return this.amount.compareTo(cash.amount)>=0;
+        } else return false;
     }
 
     /**

@@ -51,9 +51,9 @@ public class Main {
         logger.info(jozef.toString());
 
 
-        System.out.println("Transaction is success: " + Person.transactionItem(adolf, jozef));
-        logger.info(adolf.toString());
-        logger.info(jozef.toString());
+//        System.out.println("Transaction is success: " + Person.transactionItem(adolf, jozef));
+//        logger.info(adolf.toString());
+//        logger.info(jozef.toString());
 //
 //        logger.info(adolf.toString());
 //        logger.info(jozef.toString());

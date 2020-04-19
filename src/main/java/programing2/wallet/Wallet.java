@@ -44,7 +44,7 @@ public class Wallet {
 
     public boolean removeCash(Cash cashToRemove) {
         Cash cashInWallet =  findCash(cashToRemove);
-        if(cashInWallet.isEnoughAmount(cashToRemove)){
+        if(cashInWallet.isEnoughAmountAndCurrency(cashToRemove)){
 
             try {
                 cashInWallet.removeMoney(cashToRemove);

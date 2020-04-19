@@ -10,7 +10,7 @@ import java.time.Duration;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("Test of Wallet class")
-@Tag("All")
+@Tag("Wallet")
 class WalletTest {
     Wallet walletTenPLN;
     Wallet walletEmpty;

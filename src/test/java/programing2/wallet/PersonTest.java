@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("Test of Person class")
-@Tag("All")
+@Tag("Wallet")
 class PersonTest {
     Person personA;
     Person personB;
@@ -104,7 +104,7 @@ class PersonTest {
         void isMovingMoney() {
             System.out.println(cashTeenEuro);
             assertAll(
-                    () -> assertTrue(Person.transactionMoney(personA,personB,cashTeenEuro)),
+                    () -> assertTrue(personA.giveCashTo(personB,cashTeenEuro)),
                     () -> assertEquals(new Cash(BigDecimal.TEN, Currency.EURO), personA.getWallet().getMoneyList().get(1)),
                     () -> assertEquals(new Cash(BigDecimal.TEN, Currency.EURO), personB.getWallet().getMoneyList().get(1)),
                     () -> assertEquals(2, personB.getWallet().getMoneyList().size()),
@@ -117,7 +117,7 @@ class PersonTest {
         void isNotMovingMoneyWhenNotEnough() {
             System.out.println(cashTeenEuro);
             assertAll(
-                    () -> assertFalse(Person.transactionMoney(personB,personA,cashTeenEuro)),
+                    () -> assertFalse(personB.giveCashTo(personA,cashTeenEuro)),
                     () -> assertEquals(new Cash(BigDecimal.valueOf(20), Currency.EURO), personA.getWallet().getMoneyList().get(1)),
                     () -> assertEquals(new Cash(BigDecimal.ZERO, Currency.EURO), personB.getWallet().getMoneyList().get(1)),
                     () -> assertEquals(2, personB.getWallet().getMoneyList().size()),

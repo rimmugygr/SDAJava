@@ -46,7 +46,7 @@ public class OfferItem {
     private static boolean checkIsEnoughCashInList(OfferItem offer, Cash cash) {
         for (int i = 0; i < offer.getMoneyList().size(); i++) {
             Cash tempCash = offer.getMoneyList().get(i);
-            if(tempCash.isTheSameCurrency(cash) && cash.isEnoughAmount((tempCash))) return true;
+            if(tempCash.isTheSameCurrency(cash) && cash.isEnoughAmountAndCurrency((tempCash))) return true;
         }
         return false;
     }
