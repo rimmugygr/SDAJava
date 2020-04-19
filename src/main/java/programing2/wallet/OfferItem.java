@@ -14,19 +14,13 @@ public class OfferItem {
     // return cash for item in favor for selling OfferItem first match by currency of buying OfferItem
     public static Map<String, Cash> getSucceedOfferOnItem(Set<String> items, Set<OfferItem> itemsToBuy, Set<OfferItem> itemsToSell) {
         Map<String,Cash> resultTransaction = new HashMap<>();
-
         if (items == null) return Map.of();
         for (String item : items) {
             // collections with offers each side
-            OfferItem offerBuy = itemsToBuy.stream()
-                    .filter(x -> x.getName().equals(item))
-                    .findFirst().orElse(null);
-            OfferItem offerSell = itemsToSell.stream()
-                    .filter(x -> x.getName().equals(item))
-                    .findFirst().orElse(null);
+            OfferItem offerBuy = getOfferFromListByName(itemsToBuy, item);
+            OfferItem offerSell = getOfferFromListByName(itemsToSell, item);
             // if item is not in OfferItem
             if (offerBuy==null||offerSell==null) continue;
-
             // check is acceptable offer for this item
             Cash result = OfferItem.withCashIsAcceptableOffer(offerBuy,offerSell);
             if (result != null) {
@@ -36,19 +30,23 @@ public class OfferItem {
         return resultTransaction;
     }
 
+    private static OfferItem getOfferFromListByName(Collection<OfferItem> itemsToBuy, String item) {
+        return itemsToBuy.stream()
+                .filter(x -> x.getName().equals(item))
+                .findFirst().orElse(null);
+    }
+
     private static Cash withCashIsAcceptableOffer(OfferItem offerBuy, OfferItem offerSell) {
-        for (Cash cash : offerBuy.getMoneyList()) {
-            if (checkIsEnoughCashInList(offerSell, cash)) return cash;
-        }
-        return null;
+        return offerBuy.getMoneyList().stream()
+                .filter(cash -> checkIsEnoughCashInList(offerSell, cash))
+                .findFirst()
+                .orElse(null);
     }
 
     private static boolean checkIsEnoughCashInList(OfferItem offer, Cash cash) {
-        for (int i = 0; i < offer.getMoneyList().size(); i++) {
-            Cash tempCash = offer.getMoneyList().get(i);
-            if(tempCash.isTheSameCurrency(cash) && cash.isEnoughAmountAndCurrency((tempCash))) return true;
-        }
-        return false;
+        return offer.getMoneyList()
+                .stream()
+                .anyMatch(cash::isEnoughAmountAndCurrency);
     }
 
     public String getName() {

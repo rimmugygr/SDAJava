@@ -16,8 +16,23 @@ import java.util.List;
  * Osoba płaci używając portfela
  * Zaimplementuj sposób płatności jednej osoby do drugiej.
  *
- * Osoba może zaciągać pożyczki oraz je spłacać
- *  - zakładamy że pozyczkę posiada tylko przy braku pieniędzy w portfelu
+ * Person posiada zestaw Item (mogą się powtarzać)
+ * Person może mieć Item, które chce sprzedać albo kupić po określonej cenie
+ * transakcja kupna-sprzedaży:
+ * Person, która chce kupić, pyta drugą Person czy sprzeda dany Item
+ * Person sprzedająca proponuje swoją cenę
+ * Person kupująca zależnie od oczekiwanej ceny, kupuje albo nie
+ * kupująca Person płaci sprzedającej
+ * sprzedająca Person przekazuje Item kupującej
+ *
+ *
+ * Person powinny dostosować swoje oferty kupna-sprzedaży po transakcji
+ * Person sprzedająca potwierdza czy zapłacona kwota zgadza się z jej oczekiwaniami
+ * Person kupująca może spróbować zapłacić mniej niż sprzedająca oczekuje
+ * Item nie jest przekazywany jeśli Money się nie zgadzają
+ * w razie nieudanej transakcji, Person powinny mieć tyle samo Money co wcześniej
+ * wprowadź Kantor umożliwiający transakcje sprzedaży w USD i kupna w PLN, etc.
+ *
  * */
 
 
@@ -39,7 +54,7 @@ public class Main {
         adolf.addMoney(mediumMoneyEURO);
         adolf.addItem("Siekiera");
         adolf.addItemToBuy(new OfferItem("Wiadro", List.of(smallMoneyEURO)));
-        adolf.addItemToBuy(new OfferItem("Wiadro2", List.of(smallMoneyEURO)));
+        adolf.addItemToBuy(new OfferItem("Malpa", List.of(bigMoneyPLN)));
 
         Person jozef = new Person("Jozef","Kowalski");
         jozef.addMoney(bigMoneyPLN);
@@ -51,10 +66,10 @@ public class Main {
         logger.info(jozef.toString());
 
 
-//        System.out.println("Transaction is success: " + Person.transactionItem(adolf, jozef));
-//        logger.info(adolf.toString());
-//        logger.info(jozef.toString());
-//
+        System.out.println("Transaction is success: " + adolf.transactionItem(jozef,"Wiadro"));
+        logger.info(adolf.toString());
+        logger.info(jozef.toString());
+
 //        logger.info(adolf.toString());
 //        logger.info(jozef.toString());
 //
