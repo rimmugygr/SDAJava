@@ -15,8 +15,8 @@ public class OfferItem {
     public static Map<String, Cash> getSucceedOfferOnItem(Set<String> items, Set<OfferItem> itemsToBuy, Set<OfferItem> itemsToSell) {
         Map<String,Cash> resultTransaction = new HashMap<>();
 
+        if (items == null) return Map.of();
         for (String item : items) {
-
             // collections with offers each side
             OfferItem offerBuy = itemsToBuy.stream()
                     .filter(x -> x.getName().equals(item))

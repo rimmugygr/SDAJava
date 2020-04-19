@@ -107,5 +107,18 @@ class OfferItemTest {
                     );
             assertEquals(resultMap, OfferItem.getSucceedOfferOnItem(itemList,offerItemsBuy,offerItemsSell));
         }
+        @DisplayName("return right for empty inputs")
+        @Test
+        void isReturnRightForEmpty() {
+            resultMap = Map.of();
+            assertEquals(resultMap, OfferItem.getSucceedOfferOnItem(Set.of(),Set.of(),Set.of()));
+        }
+
+        @DisplayName("return right for null inputs")
+        @Test
+        void isReturnRightForNull() {
+            resultMap = Map.of();
+            assertEquals(resultMap, OfferItem.getSucceedOfferOnItem(null, null, null));
+        }
     }
 }
