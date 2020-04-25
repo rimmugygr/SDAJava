@@ -2,27 +2,27 @@ package programing2.wallet;
 
 import java.util.*;
 
-public class OfferItem {
+public class Offer {
     private String name;
     private List<Cash> moneyList;
 
-    public OfferItem(String name, List<Cash> moneyList) {
+    public Offer(String name, List<Cash> moneyList) {
         this.name = name;
         this.moneyList = moneyList;
     }
 
     // return cash for item in favor for selling OfferItem first match by currency of buying OfferItem
-    public static Map<String, Cash> getSucceedOfferOnItem(Set<String> items, Set<OfferItem> itemsToBuy, Set<OfferItem> itemsToSell) {
+    public static Map<String, Cash> getSucceedOfferOnItem(Set<String> items, Set<Offer> itemsToBuy, Set<Offer> itemsToSell) {
         Map<String,Cash> resultTransaction = new HashMap<>();
         if (items == null) return Map.of();
         for (String item : items) {
             // collections with offers each side
-            OfferItem offerBuy = getOfferFromListByName(itemsToBuy, item);
-            OfferItem offerSell = getOfferFromListByName(itemsToSell, item);
+            Offer offerBuy = getOfferFromListByName(itemsToBuy, item);
+            Offer offerSell = getOfferFromListByName(itemsToSell, item);
             // if item is not in OfferItem
             if (offerBuy==null||offerSell==null) continue;
             // check is acceptable offer for this item
-            Cash result = OfferItem.withCashIsAcceptableOffer(offerBuy,offerSell);
+            Cash result = Offer.withCashIsAcceptableOffer(offerBuy,offerSell);
             if (result != null) {
                 resultTransaction.put(item,result);
             }
@@ -30,20 +30,20 @@ public class OfferItem {
         return resultTransaction;
     }
 
-    private static OfferItem getOfferFromListByName(Collection<OfferItem> itemsToBuy, String item) {
+    private static Offer getOfferFromListByName(Collection<Offer> itemsToBuy, String item) {
         return itemsToBuy.stream()
                 .filter(x -> x.getName().equals(item))
                 .findFirst().orElse(null);
     }
 
-    private static Cash withCashIsAcceptableOffer(OfferItem offerBuy, OfferItem offerSell) {
+    private static Cash withCashIsAcceptableOffer(Offer offerBuy, Offer offerSell) {
         return offerBuy.getMoneyList().stream()
                 .filter(cash -> checkIsEnoughCashInList(offerSell, cash))
                 .findFirst()
                 .orElse(null);
     }
 
-    private static boolean checkIsEnoughCashInList(OfferItem offer, Cash cash) {
+    private static boolean checkIsEnoughCashInList(Offer offer, Cash cash) {
         return offer.getMoneyList()
                 .stream()
                 .anyMatch(cash::isEnoughAmountAndCurrency);
@@ -69,8 +69,8 @@ public class OfferItem {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        OfferItem offerItem = (OfferItem) o;
-        return Objects.equals(name, offerItem.name);
+        Offer offer = (Offer) o;
+        return Objects.equals(name, offer.name);
     }
 
     @Override

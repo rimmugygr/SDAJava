@@ -14,8 +14,8 @@ public class Person {
     private Wallet wallet;
 
     private Set<String> itemsHave;
-    private Set<OfferItem> itemsToBuy;
-    private Set<OfferItem> itemsToSell;
+    private Set<Offer> itemsToBuy;
+    private Set<Offer> itemsToSell;
 
     public Person(String firstName, String lastName) {
         this.firstName = firstName;
@@ -34,16 +34,16 @@ public class Person {
     public void addItem(String name){
         logger.info(this.firstName + " add item: " + name);
         this.itemsHave.add(name);
-        this.itemsToBuy.remove(new OfferItem(name,null));
+        this.itemsToBuy.remove(new Offer(name,null));
     }
 
-    public void addItemToBuy(OfferItem offerItem){
-        this.itemsToBuy.add(offerItem);
+    public void addItemToBuy(Offer offer){
+        this.itemsToBuy.add(offer);
     }
 
-    public void addItemToSell(OfferItem offerItem){
-        if (this.itemsHave.contains(offerItem.getName())) {
-            this.itemsToSell.add(offerItem);
+    public void addItemToSell(Offer offer){
+        if (this.itemsHave.contains(offer.getName())) {
+            this.itemsToSell.add(offer);
         }
     }
     public String getFirstName() {
@@ -57,13 +57,13 @@ public class Person {
     public boolean transactionAllItem(Person sellingPerson) {
         // check is items to trade
         Set<String> itemsName = this.itemsToBuy.stream()
-                .map(OfferItem::getName)
+                .map(Offer::getName)
                 .filter(sellingPerson::isItemToSell)
                 .collect(Collectors.toSet());
         // if no items to transaction return false
         if (itemsName.isEmpty()) return false;
         // check offer
-        Map<String, Cash> resultTransaction = OfferItem.getSucceedOfferOnItem(itemsName, this.itemsToBuy,  sellingPerson.getItemsToSell());
+        Map<String, Cash> resultTransaction = Offer.getSucceedOfferOnItem(itemsName, this.itemsToBuy,  sellingPerson.getItemsToSell());
         // if person have not enough money to give
         return transactionMoneysAndItems(sellingPerson, resultTransaction);
     }
@@ -71,7 +71,7 @@ public class Person {
     public boolean transactionItem(Person sellingPerson, String item) {
         if (item==null) return false;
         // check offer
-        Map<String, Cash> resultTransaction = OfferItem.getSucceedOfferOnItem(Set.of(item), this.itemsToBuy, sellingPerson.getItemsToSell());
+        Map<String, Cash> resultTransaction = Offer.getSucceedOfferOnItem(Set.of(item), this.itemsToBuy, sellingPerson.getItemsToSell());
         return transactionMoneysAndItems(sellingPerson, resultTransaction);
     }
 
@@ -92,7 +92,7 @@ public class Person {
             if(sellingPerson.removeItem(name)){
                 this.addItem(name);
             } else {
-                this.removeCashFrom(sellingPerson, cashGiven);
+                this.removeCashFrom(sellingPerson, cashGiven);// todo
             }
         }
     }
@@ -100,12 +100,12 @@ public class Person {
     private boolean removeItem(String name) {
         logger.info(this.firstName + " remove item: " + name);
         boolean result = this.itemsHave.remove(name);
-        this.itemsToSell.remove(new OfferItem(name,null));
+        this.itemsToSell.remove(new Offer(name,null));
         return result;
     }
 
     public boolean isItemToSell(String name){
-        return this.itemsToSell.stream().map(OfferItem::getName).anyMatch(name::equals);
+        return this.itemsToSell.stream().map(Offer::getName).anyMatch(name::equals);
     }
 
     private boolean transactionMoney(Person sourcePerson, Person targetPerson, Cash cashGiven) {
@@ -157,11 +157,11 @@ public class Person {
         this.wallet = wallet;
     }
 
-    public Set<OfferItem> getItemsToBuy() {
+    public Set<Offer> getItemsToBuy() {
         return itemsToBuy;
     }
 
-    public Set<OfferItem> getItemsToSell() {
+    public Set<Offer> getItemsToSell() {
         return itemsToSell;
     }
 
