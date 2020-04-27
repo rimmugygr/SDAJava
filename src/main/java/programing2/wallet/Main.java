@@ -1,11 +1,12 @@
 package programing2.wallet;
 
+//
+//import org.apache.log4j.LogManager;
+//import org.apache.log4j.Logger;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
-import programing2.wallet.exceptions.IncorrectCurrencyException;
-import programing2.wallet.exceptions.IncorrectAmountException;
-import programing2.wallet.exceptions.NoEnoughMoneyException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 import java.io.IOException;
 import java.util.List;
@@ -40,7 +41,8 @@ import java.util.List;
 
 
 public class Main {
-    private static final Logger logger = LogManager.getLogger(Main.class);
+    //private static final Logger LOGGER = LogManager.getLogger(Main.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) throws IOException {
         Cash smallMoneyPLN = new Cash((double) 543);
@@ -63,16 +65,21 @@ public class Main {
         jozef.addItem("Malpa");
         jozef.addItem("Wiadro");
         jozef.addItemToSell(new Offer("Wiadro", List.of(smallMoneyEURO)));
-        logger.info(adolf.toString());
-        logger.info(jozef.toString());
+        LOGGER.info(adolf.toString());
+        LOGGER.info(jozef.toString());
 
 
-        System.out.println("Transaction is success: " + adolf.transactionItem(jozef,"Wiadro"));
-        logger.info(adolf.toString());
-        logger.info(jozef.toString());
+        LOGGER.debug("Transaction is success: " + adolf.transactionItem(jozef,"Wiadro"));
+        LOGGER.info(adolf.toString());
+        LOGGER.info(jozef.toString());
 
-        Cantor.getCourseByFile("dataCourse");
+        Cantor cantorPLN = new Cantor("dataCourse");
 
+        cantorPLN.exchange(jozef, smallMoneyEURO, Currency.USD);
+
+        LOGGER.info(adolf.toString());
+        LOGGER.info(jozef.toString());
+        LOGGER.debug(cantorPLN.toString());
 
 
 

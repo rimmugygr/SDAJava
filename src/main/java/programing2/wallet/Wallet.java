@@ -1,5 +1,7 @@
 package programing2.wallet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import programing2.wallet.exceptions.IncorrectCurrencyException;
 import programing2.wallet.exceptions.IncorrectAmountException;
 import programing2.wallet.exceptions.NoEnoughMoneyException;
@@ -8,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Wallet {
+    private static final Logger LOGGER = LoggerFactory.getLogger(Main.class);
+
     private List<Cash> moneyList;
     
     {
@@ -34,6 +38,7 @@ public class Wallet {
         try {
             cashInWallet.addMoney(cashToAdd);
         } catch (IncorrectCurrencyException | IncorrectAmountException e) {
+            LOGGER.warn("Incorrect adding money :" + toString() +"to"+ cashToAdd.toString());
             return false;
         }
         return true;
@@ -49,6 +54,7 @@ public class Wallet {
             try {
                 cashInWallet.removeMoney(cashToRemove);
             } catch (IncorrectCurrencyException | NoEnoughMoneyException | IncorrectAmountException e) {
+                LOGGER.warn("Incorrect removing money : from" + toString() +"to"+ cashToRemove.toString());
                 return false;
             }
             return true;

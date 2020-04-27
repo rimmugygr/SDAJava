@@ -1,13 +1,13 @@
 package programing2.wallet;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class Person {
-    private static final Logger logger = LogManager.getLogger(Person.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Main.class);
 
     private String firstName;
     private String lastName;
@@ -32,18 +32,21 @@ public class Person {
     }
 
     public void addItem(String name){
-        logger.info(this.firstName + " add item: " + name);
+        LOGGER.info(this.firstName + " add item: " + name);
         this.itemsHave.add(name);
         this.itemsToBuy.remove(new Offer(name,null));
     }
 
     public void addItemToBuy(Offer offer){
+        LOGGER.info(this.firstName + " add offer: " + offer);
         this.itemsToBuy.add(offer);
     }
 
     public void addItemToSell(Offer offer){
         if (this.itemsHave.contains(offer.getName())) {
             this.itemsToSell.add(offer);
+        } else {
+            LOGGER.warn(this.firstName + " dont add offer because dont have item: " + offer.getName());
         }
     }
     public String getFirstName() {
@@ -92,13 +95,14 @@ public class Person {
             if(sellingPerson.removeItem(name)){
                 this.addItem(name);
             } else {
-                this.removeCashFrom(sellingPerson, cashGiven);// todo
+                sellingPerson.giveCashTo(this, cashGiven);// todo
+
             }
         }
     }
 
     private boolean removeItem(String name) {
-        logger.info(this.firstName + " remove item: " + name);
+        LOGGER.info(this.firstName + " remove item: " + name);
         boolean result = this.itemsHave.remove(name);
         this.itemsToSell.remove(new Offer(name,null));
         return result;
@@ -112,10 +116,10 @@ public class Person {
         boolean isRemovedFromSourcePerson = sourcePerson.removeMoney(cashGiven);
         if (isRemovedFromSourcePerson) {
             targetPerson.addMoney(cashGiven);
-            logger.info(sourcePerson.getFirstName() + " give to " + targetPerson.getFirstName() + " " + cashGiven.toString());
+            LOGGER.info(sourcePerson.getFirstName() + " give to " + targetPerson.getFirstName() + " " + cashGiven.toString());
             return true;
         } else {
-            logger.info(sourcePerson.getFirstName() + " not give to " + targetPerson.getFirstName() + " " + cashGiven.toString());
+            LOGGER.info(sourcePerson.getFirstName() + " not give to " + targetPerson.getFirstName() + " " + cashGiven.toString());
             return false;
         }
     }
@@ -130,20 +134,20 @@ public class Person {
 
     public boolean addMoney(Cash cash) {
         if(this.wallet.addCash(cash)){
-            logger.info(this.getFirstName() + " get  " + cash.toString());
+            LOGGER.info(this.getFirstName() + " get  " + cash.toString());
             return true;
         } else {
-            logger.info(this.getFirstName() + " dont get  " + cash.toString());
+            LOGGER.warn(this.getFirstName() + " dont get  " + cash.toString());
             return false;
         }
     }
 
     public boolean removeMoney(Cash cash) {
         if(this.wallet.removeCash(cash)){
-            logger.info(this.getFirstName() + " remove " + cash.toString() + " from wallet");
+            LOGGER.info(this.getFirstName() + " remove " + cash.toString() + " from wallet");
             return true;
         } else {
-            logger.info(this.getFirstName() + " dont have " + cash.toString());
+            LOGGER.warn(this.getFirstName() + " dont have " + cash.toString());
             return false;
         }
     }

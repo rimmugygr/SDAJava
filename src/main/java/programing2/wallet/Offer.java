@@ -37,8 +37,8 @@ public class Offer {
     }
 
     private static Cash withCashIsAcceptableOffer(Offer offerBuy, Offer offerSell) {
-        return offerBuy.getMoneyList().stream()
-                .filter(cash -> checkIsEnoughCashInList(offerSell, cash))
+        return offerSell.getMoneyList().stream()
+                .filter(cash -> checkIsEnoughCashInList(offerBuy, cash))
                 .findFirst()
                 .orElse(null);
     }

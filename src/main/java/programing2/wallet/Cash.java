@@ -44,6 +44,11 @@ public class Cash {
         return amount;
     }
 
+    public Cash changeCurrency(Cash course) {
+        BigDecimal changeAmount = this.amount.multiply(course.amount);
+        return new Cash(changeAmount, course.currency);
+    }
+
     /**
      * Add value of amount from object in param
      * @param cashToAdd
