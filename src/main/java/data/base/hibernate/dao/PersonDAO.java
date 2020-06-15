@@ -20,10 +20,10 @@ public class PersonDAO {
     }
     public static Person getPeople(Long id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-
-        Query query = session.createQuery("select p from Person p where p.id=:id");
-        query.setParameter("id", id);
-        Person people = (Person) query.getSingleResult();
+        Person people = session.get(Person.class,id);
+//        Person people = (Person) session.createQuery("select p from Person p where p.id=:id")
+//                .setParameter("id", id)
+//                .getSingleResult();
         session.close();
         return people;
     }
