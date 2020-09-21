@@ -1,0 +1,52 @@
+DI implementation of IoC
+
+@Component {@Service,@Service, ...}
+
+mvn spring-boot:run -Dspring.profiles.active=dev
+
+CreateUserResponse -> Controller
+
+DTO -> Services
+
+DAO -> Entity -> Repository
+
+presystencja, kwestia widoczności
+
+findById() <- SQL
+
+getOne() <- from L1 cash, nie obciąża bazy
+
+Cash (Provider między repo a servisem )
+@CashAble
+
+HashMap wg hashcode sortowane
+HashMap - kubełki wg hashcode
+
+31* szybsze niż dodawanie, bo to przesunięcie bitowe
+
+Lib RestClient:
+ - restTemplate
+ - openFeing
+ - retroFit
+
+subskrypja Kaffka
+
+spock grovy <- reaktywne testowanie warte uwagi
+
+Kitematic  <- for docker
+
+@slfj
+
+info <- co aktualnie program robi
+- w controllerze na początku i końcu 
+
+debug <-  
+- co się dzieje z obiektem
+ 
+warrn <- problemy z czymś np. pobranie danych dla kogoś
+error <- np. pobieranie danych dla wszystkich
+
+
+Lombok
+@SneaykThrows
+switch catch exception to uncatch exception

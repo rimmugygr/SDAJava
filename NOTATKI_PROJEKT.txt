@@ -1,0 +1,120 @@
+
+waterfall (cały program)
+ - requirements
+ - design
+ - 
+ - implementation
+ - versiong
+ - 
+
+arrylista
+- implementacja tablicowa
+- szybkie wyszukiwane o(1) bo
+
+linkedlista
+- implementacja obiektowa
+- lista wiązana dwukierunkowa
+- wyszukiwanie o(n)
+- dodawanie informacji szybkie
+
+glola
+
+git plog
+
+git status
+
+git push 
+
+git fetch + git merge => git pull
+
+git rebase
+
+git fetch
+git rest --hard orgin/master 
+
+git status
+git diff
+git add .
+git commit -m 'commit name'
+git push orgin master
+
+!!! twardy reset
+git reset --hard orgin master
+
+jar kompiluje się
+war do serwerów kontenrowych
+
+loud balancer rodzela do hostów
+
+relacyjen DB
+- ACID 
+
+nie ma full CAP
+
+nie realcyjne
+-BASE
+
+JSON BSON
+
+Angular Forms
+- Template-Driven
+- Reactive (Model-Driven)
+
+lista wszystkich obrazów:
+docker ps -a
+
+ng g m pages/employees --routing -f
+ng g c pages/employees -m employess
+
+reverse proxy -> gateway
+
+websocket 
+loadBalancer
+
+redux patern for angular:
+- ngxs (base on js, lot of bolierplate code)
+- ngrx (base on ts, simple)
+
+featch -> set to store 
+selctor -> get from store
+
+ngxs command:
+npm install @ngxs/store
+npm install @ngxs/storage-plugin
+npm install @ngxs/devtools-plugin
+npm add @ngxs/schematics
+ng g @ngxs/schematics:store --name employees --path app/shared/state
+
+action
+-succesful
+-canceled
+-error
+
+
+observable vs promis:
+-fetch(): Promise<any>    >>> not cancelable
+	.then()
+	.catch()
+-http.get(): Observable<any>  >>> cancelable
+	.subscribe(
+	data => {},
+	error => {},
+	() => {}
+	)
+
+LOAD BALANCER -> GATEWAY -> 
+
+socket rest 
+
+Bloking API - synchroniczne
+NonBloking API - asynchroniczne (w Springu WebFlux, reactive)
+
+// angular
+navigate do skomplikowanych linków
+ActionHandler
+
+rxjs
+take(1) -> one time and unsubscrabe
+
+repo Darka Macha
+d-mg
